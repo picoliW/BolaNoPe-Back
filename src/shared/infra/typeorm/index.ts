@@ -1,3 +1,4 @@
+import User from "@modules/users/infra/typeorm/entities/User";
 import { DataSource } from "typeorm";
 
 require("dotenv").config();
@@ -7,7 +8,7 @@ export const dataSource = new DataSource({
   database: process.env.DB_NAME,
   synchronize: true,
   logging: ["query", "error"],
-  entities: [],
+  entities: [User],
   migrations: [],
   subscribers: [],
 });
