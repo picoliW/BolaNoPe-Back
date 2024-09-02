@@ -5,6 +5,7 @@ export interface ICreateUser {
   email: string;
   password: string;
   cep: string;
+  role?: string;
   patio?: string;
   complement?: string;
   neighborhood?: string;
