@@ -20,7 +20,7 @@ export default class UsersController {
   }
 
   public async create(request: Request, response: Response): Promise<Response> {
-    const { name, cpf, birth, email, password, cep, qualified } = request.body;
+    const { name, cpf, birth, email, password, cep, role } = request.body;
 
     const createUser = container.resolve(CreateUserService);
 
@@ -32,6 +32,7 @@ export default class UsersController {
         email,
         password,
         cep,
+        role,
       });
 
       return response.status(201).json(user);
