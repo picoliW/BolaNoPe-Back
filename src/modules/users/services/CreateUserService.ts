@@ -20,6 +20,7 @@ class CreateUserService {
     email,
     password,
     cep,
+    role = "user",
   }: ICreateUser): Promise<User> {
     const existingUser = await this.usersRepository.findByCPF(cpf);
     if (existingUser) {
@@ -51,6 +52,7 @@ class CreateUserService {
       email,
       password: hashedPassword,
       cep,
+      role,
       patio: addressFields.logradouro,
       complement: addressFields.complemento,
       neighborhood: addressFields.bairro,

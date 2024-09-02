@@ -26,6 +26,9 @@ class User {
   cep: string;
 
   @Column()
+  role: string;
+
+  @Column()
   patio: string;
 
   @Column()
