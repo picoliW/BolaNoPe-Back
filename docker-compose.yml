@@ -1,0 +1,28 @@
+services:
+
+  database:
+    image: mongo:4.4
+    container_name: mongo
+    ports:
+      - '27017:27017'
+    volumes:
+      - data:/data/db
+
+  web:
+    build:
+      context: .
+    command: npm start
+    expose: 
+      - '3000:3000'
+    ports: 
+      - '3000:3000'
+    volumes:
+      - .:/usr/node/app
+    env_file:
+      - .env
+    depends_on:
+      - database
+
+volumes:
+  data:
+    driver: local

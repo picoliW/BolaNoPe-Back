@@ -8,5 +8,6 @@ export const CreateUserSchema = celebrate({
     email: Joi.string().email().required(),
     password: Joi.string().required().min(6),
     cep: Joi.string().required(),
+    role: Joi.string(),
   },
 });
