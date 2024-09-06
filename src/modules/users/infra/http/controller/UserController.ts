@@ -25,7 +25,7 @@ export default class UsersController {
     const createUser = container.resolve(CreateUserService);
 
     try {
-      const user = await createUser.execute({
+      const { user, token } = await createUser.execute({
         name,
         cpf,
         birth,
@@ -35,7 +35,7 @@ export default class UsersController {
         role,
       });
 
-      return response.status(201).json(user);
+      return response.status(201).json({ user, token });
     } catch (error) {
       if (error instanceof ConflictError) {
         return response.status(409).json({ message: error.message });

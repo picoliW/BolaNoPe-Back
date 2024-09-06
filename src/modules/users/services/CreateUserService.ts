@@ -5,6 +5,8 @@ import User from "../infra/typeorm/entities/User";
 import axios from "axios";
 import bcrypt from "bcrypt";
 import { ConflictError } from "@shared/errors/ConflictError";
+import { sign } from "jsonwebtoken";
+import authConfig from "@shared/utils/auth";
 
 @injectable()
 class CreateUserService {
@@ -21,7 +23,7 @@ class CreateUserService {
     password,
     cep,
     role = "user",
-  }: ICreateUser): Promise<User> {
+  }: ICreateUser): Promise<{ user: User; token: string }> {
     const existingUser = await this.usersRepository.findByCPF(cpf);
     if (existingUser) {
       throw new ConflictError("CPF already exists");
@@ -62,7 +64,12 @@ class CreateUserService {
 
     await this.usersRepository.save(user);
 
-    return user;
+    // Gerar token JWT
+    const token = sign({ id: user._id }, authConfig.jwt.secret, {
+      expiresIn: authConfig.jwt.expiresIn,
+    });
+
+    return { user, token };
   }
 }
 
