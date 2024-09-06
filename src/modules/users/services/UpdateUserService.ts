@@ -7,6 +7,7 @@ import { NotFoundError } from "@shared/errors/NotFoundError";
 import { ConflictError } from "@shared/errors/ConflictError";
 import { IUpdateUser } from "../domain/models/IUpdateUser";
 import bcrypt from "bcrypt";
+import axios from "axios";
 
 @injectable()
 class UpdateUserService {
@@ -68,6 +69,25 @@ class UpdateUserService {
     if (cep) {
       user.cep = cep;
       updatedFields.cep = cep;
+    }
+
+    if (cpf || cep) {
+      const response = await axios.get(
+        `https://viacep.com.br/ws/${cep || user.cep}/json`,
+      );
+      const { logradouro, complemento, bairro, localidade, uf } = response.data;
+
+      user.patio = logradouro || "N/A";
+      user.complement = complemento || "N/A";
+      user.neighborhood = bairro || "N/A";
+      user.locality = localidade || "N/A";
+      user.uf = uf || "N/A";
+
+      updatedFields.patio = logradouro || "N/A";
+      updatedFields.complement = complemento || "N/A";
+      updatedFields.neighborhood = bairro || "N/A";
+      updatedFields.locality = localidade || "N/A";
+      updatedFields.uf = uf || "N/A";
     }
 
     await this.userRepository.save(user);
