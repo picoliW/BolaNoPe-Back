@@ -64,12 +64,17 @@ class CreateUserService {
 
     await this.usersRepository.save(user);
 
-    // Gerar token JWT
-    const token = sign({ id: user._id }, authConfig.jwt.secret, {
-      expiresIn: authConfig.jwt.expiresIn,
+    const { secret, expiresIn } = authConfig.jwt;
+
+    const token = sign({}, secret, {
+      subject: user._id.toString(),
+      expiresIn,
     });
 
-    return { user, token };
+    return {
+      user,
+      token,
+    };
   }
 }
 
