@@ -1,3 +1,4 @@
+import Field from "@modules/fields/infra/typeorm/entities/Field";
 import User from "@modules/users/infra/typeorm/entities/User";
 import { DataSource } from "typeorm";
 
@@ -9,7 +10,7 @@ export const dataSource = new DataSource({
   host: process.env.DB_HOST,
   synchronize: true,
   logging: ["query", "error"],
-  entities: [User],
+  entities: [User, Field],
   migrations: [],
   subscribers: [],
 });
