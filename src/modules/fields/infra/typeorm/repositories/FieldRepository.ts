@@ -14,7 +14,7 @@ class FieldsRepository implements IFieldsRepository {
   public async create({
     name,
     location,
-    value,
+    value_hour,
     obs,
     days,
     schedules,
@@ -23,7 +23,7 @@ class FieldsRepository implements IFieldsRepository {
     const field = this.ormRepository.create({
       name,
       location,
-      value,
+      value_hour,
       obs,
       days,
       schedules,
