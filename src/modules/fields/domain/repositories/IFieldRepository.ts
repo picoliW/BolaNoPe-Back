@@ -6,7 +6,7 @@ export interface IFieldsRepository {
   create({
     name,
     location,
-    value,
+    value_hour,
     obs,
     days,
     schedules,

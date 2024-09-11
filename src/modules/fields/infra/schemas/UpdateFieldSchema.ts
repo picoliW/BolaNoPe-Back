@@ -4,7 +4,7 @@ export const UpdateFieldSchema = celebrate({
   [Segments.BODY]: {
     name: Joi.string(),
     location: Joi.string(),
-    value: Joi.string(),
+    value_hour: Joi.string(),
     obs: Joi.string(),
     days: Joi.string(),
     schedules: Joi.string(),

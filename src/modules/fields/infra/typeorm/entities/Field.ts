@@ -13,7 +13,7 @@ class Field {
   location: string;
 
   @Column()
-  value: string;
+  value_hour: string;
 
   @Column()
   obs: string;

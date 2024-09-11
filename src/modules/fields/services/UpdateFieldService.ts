@@ -17,7 +17,7 @@ class UpdateFieldService {
     _id,
     name,
     location,
-    value,
+    value_hour,
     obs,
     days,
     schedules,
@@ -39,9 +39,9 @@ class UpdateFieldService {
       field.location = location;
       updatedFields.location = location;
     }
-    if (value) {
-      field.value = value;
-      updatedFields.value = value;
+    if (value_hour) {
+      field.value_hour = value_hour;
+      updatedFields.value_hour = value_hour;
     }
     if (obs) {
       field.obs = obs;

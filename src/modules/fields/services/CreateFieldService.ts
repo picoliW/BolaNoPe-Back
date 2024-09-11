@@ -13,7 +13,7 @@ class CreateFieldService {
   public async execute({
     name,
     location,
-    value,
+    value_hour,
     obs,
     days,
     schedules,
@@ -22,7 +22,7 @@ class CreateFieldService {
     const field = await this.fieldsRepository.create({
       name,
       location,
-      value,
+      value_hour,
       obs,
       days,
       schedules,
