@@ -19,8 +19,8 @@ class UpdateFieldService {
     location,
     value_hour,
     obs,
-    days,
-    schedules,
+    open_time,
+    close_time,
     available,
   }: IUpdateField): Promise<Partial<Field>> {
     const field = await this.fieldRepository.findById(new ObjectId(_id));
@@ -47,13 +47,13 @@ class UpdateFieldService {
       field.obs = obs;
       updatedFields.obs = obs;
     }
-    if (days) {
-      field.days = days;
-      updatedFields.days = days;
+    if (open_time) {
+      field.open_time = open_time;
+      updatedFields.open_time = open_time;
     }
-    if (schedules) {
-      field.schedules = schedules;
-      updatedFields.schedules = schedules;
+    if (close_time) {
+      field.close_time = close_time;
+      updatedFields.close_time = close_time;
     }
     if (available) {
       field.available = available;

@@ -6,8 +6,8 @@ export const CreateFieldSchema = celebrate({
     location: Joi.string().required(),
     value_hour: Joi.string().required(),
     obs: Joi.string(),
-    days: Joi.string().required(),
-    schedules: Joi.string().required(),
+    open_time: Joi.string().required(),
+    close_time: Joi.string().required(),
     available: Joi.boolean().required(),
   },
 });

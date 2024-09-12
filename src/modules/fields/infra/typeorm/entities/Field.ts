@@ -19,10 +19,10 @@ class Field {
   obs: string;
 
   @Column()
-  days: string;
+  open_time: string;
 
   @Column()
-  schedules: string;
+  close_time: string;
 
   @Column()
   available: boolean;

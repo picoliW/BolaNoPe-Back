@@ -15,8 +15,8 @@ class CreateFieldService {
     location,
     value_hour,
     obs,
-    days,
-    schedules,
+    open_time,
+    close_time,
     available,
   }: ICreateField): Promise<Field> {
     const field = await this.fieldsRepository.create({
@@ -24,8 +24,8 @@ class CreateFieldService {
       location,
       value_hour,
       obs,
-      days,
-      schedules,
+      open_time,
+      close_time,
       available,
     });
 
