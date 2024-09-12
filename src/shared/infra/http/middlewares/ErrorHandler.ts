@@ -23,6 +23,4 @@ export const ErrorHandlerMiddleware = (
   };
 
   res.status(customError.statusCode as number).json(customError);
-
-  next();
 };
