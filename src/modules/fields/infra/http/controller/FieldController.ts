@@ -1,41 +1,49 @@
 import { Request, Response } from "express";
-import CreateUserService from "@modules/users/services/CreateUserService";
+import CreateFieldService from "@modules/fields/services/CreateFieldService";
 import { container } from "tsyringe";
-import ListUserService from "@modules/users/services/ListUserService";
-import DeleteUserService from "@modules/users/services/DeleteUserService";
+import ListFieldService from "@modules/fields/services/ListFieldService";
+import DeleteFieldService from "@modules/fields/services/DeleteFieldService";
 import { ObjectId } from "mongodb";
-import ShowOneUserService from "@modules/users/services/ShowOneUserService";
-import UpdateUserService from "@modules/users/services/UpdateUserService";
+import ShowOneFieldService from "@modules/fields/services/ShowOneFieldService";
+import UpdateFieldService from "@modules/fields/services/UpdateFieldService";
 import { ConflictError } from "@shared/errors/ConflictError";
 import { NotFoundError } from "@shared/errors/NotFoundError";
 import { BadRequestError } from "@shared/errors/BadRequestError";
 
-export default class UsersController {
+export default class FieldsController {
   public async index(req: Request, res: Response): Promise<Response> {
-    const listUser = container.resolve(ListUserService);
+    const listField = container.resolve(ListFieldService);
 
-    const users = await listUser.execute();
+    const fields = await listField.execute();
 
-    return res.json(users);
+    return res.json(fields);
   }
 
   public async create(request: Request, response: Response): Promise<Response> {
-    const { name, cpf, birth, email, password, cep, role } = request.body;
+    const {
+      name,
+      location,
+      value_hour,
+      obs,
+      open_time,
+      close_time,
+      available,
+    } = request.body;
 
-    const createUser = container.resolve(CreateUserService);
+    const createField = container.resolve(CreateFieldService);
 
     try {
-      const { user, token } = await createUser.execute({
+      const field = await createField.execute({
         name,
-        cpf,
-        birth,
-        email,
-        password,
-        cep,
-        role,
+        location,
+        value_hour,
+        obs,
+        open_time,
+        close_time,
+        available,
       });
 
-      return response.status(201).json({ user, token });
+      return response.status(201).json({ field });
     } catch (error) {
       if (error instanceof ConflictError) {
         return response.status(409).json({ message: error.message });
@@ -48,45 +56,54 @@ export default class UsersController {
 
   public async delete(req: Request, res: Response): Promise<Response> {
     const { id } = req.params;
-    const deleteUser = container.resolve(DeleteUserService);
+    const deleteField = container.resolve(DeleteFieldService);
 
     try {
       const objectId = new ObjectId(id);
-      await deleteUser.execute({ _id: objectId });
+      await deleteField.execute({ _id: objectId });
       return res.status(204).json();
     } catch (error) {
-      return res.status(404).json({ message: "User not found" });
+      return res.status(404).json({ message: "Field not found" });
     }
   }
 
   public async show(req: Request, res: Response): Promise<Response> {
     const { id } = req.params;
-    const showUser = container.resolve(ShowOneUserService);
+    const showField = container.resolve(ShowOneFieldService);
     const objectId = new ObjectId(id);
-    const user = await showUser.execute(objectId);
+    const field = await showField.execute(objectId);
 
-    if (!user) {
-      return res.status(404).json({ error: "User not found" });
+    if (!field) {
+      return res.status(404).json({ error: "Field not found" });
     }
 
-    return res.json(user);
+    return res.json(field);
   }
 
   public async update(req: Request, res: Response): Promise<Response> {
     const { id } = req.params;
-    const { name, cpf, birth, email, password, cep } = req.body;
-    const updateUserService = container.resolve(UpdateUserService);
+    const {
+      name,
+      location,
+      value_hour,
+      obs,
+      open_time,
+      close_time,
+      available,
+    } = req.body;
+    const updateFieldService = container.resolve(UpdateFieldService);
     const objectId = new ObjectId(id);
 
     try {
-      const updatedFields = await updateUserService.execute({
+      const updatedFields = await updateFieldService.execute({
         _id: objectId,
         name,
-        cpf,
-        birth,
-        email,
-        password,
-        cep,
+        location,
+        value_hour,
+        obs,
+        open_time,
+        close_time,
+        available,
       });
 
       return res.status(200).json(updatedFields);
