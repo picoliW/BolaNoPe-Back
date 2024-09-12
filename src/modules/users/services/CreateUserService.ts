@@ -66,11 +66,17 @@ class CreateUserService {
 
     const { secret, expiresIn } = authConfig.jwt;
 
-    const token = sign({}, secret, {
-      subject: user._id.toString(),
-      expiresIn,
-    });
-
+    const token = sign(
+      {
+        role: user.role, 
+        userId: user._id.toString()
+      },
+      secret,
+      {
+        subject: user._id.toString(),
+        expiresIn,
+      }
+    );
     return {
       user,
       token,
