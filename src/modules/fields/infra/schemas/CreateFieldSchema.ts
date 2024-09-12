@@ -6,6 +6,7 @@ export const CreateFieldSchema = celebrate({
     location: Joi.string().required(),
     value_hour: Joi.string().required(),
     obs: Joi.string(),
+    file_url: Joi.string(),
     open_time: Joi.string().required(),
     close_time: Joi.string().required(),
     available: Joi.boolean().required(),
