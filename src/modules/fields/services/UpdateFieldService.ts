@@ -19,6 +19,7 @@ class UpdateFieldService {
     location,
     value_hour,
     obs,
+    file_url,
     open_time,
     close_time,
     available,
@@ -58,6 +59,10 @@ class UpdateFieldService {
     if (available) {
       field.available = available;
       updatedFields.available = available;
+    }
+    if (file_url) {
+      field.file_url = file_url;
+      updatedFields.file_url = file_url;
     }
 
     await this.fieldRepository.save(field);
