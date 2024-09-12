@@ -20,8 +20,15 @@ export default class FieldsController {
   }
 
   public async create(request: Request, response: Response): Promise<Response> {
-    const { name, location, value_hour, obs, days, schedules, available } =
-      request.body;
+    const {
+      name,
+      location,
+      value_hour,
+      obs,
+      open_time,
+      close_time,
+      available,
+    } = request.body;
 
     const createField = container.resolve(CreateFieldService);
 
@@ -31,8 +38,8 @@ export default class FieldsController {
         location,
         value_hour,
         obs,
-        days,
-        schedules,
+        open_time,
+        close_time,
         available,
       });
 
@@ -75,8 +82,15 @@ export default class FieldsController {
 
   public async update(req: Request, res: Response): Promise<Response> {
     const { id } = req.params;
-    const { name, location, value_hour, obs, days, schedules, available } =
-      req.body;
+    const {
+      name,
+      location,
+      value_hour,
+      obs,
+      open_time,
+      close_time,
+      available,
+    } = req.body;
     const updateFieldService = container.resolve(UpdateFieldService);
     const objectId = new ObjectId(id);
 
@@ -87,8 +101,8 @@ export default class FieldsController {
         location,
         value_hour,
         obs,
-        days,
-        schedules,
+        open_time,
+        close_time,
         available,
       });
 

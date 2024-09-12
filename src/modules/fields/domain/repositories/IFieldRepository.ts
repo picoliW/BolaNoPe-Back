@@ -8,8 +8,8 @@ export interface IFieldsRepository {
     location,
     value_hour,
     obs,
-    days,
-    schedules,
+    open_time,
+    close_time,
     available,
   }: ICreateField): Promise<Field>;
   save(field: Field): Promise<Field>;

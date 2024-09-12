@@ -16,8 +16,8 @@ class FieldsRepository implements IFieldsRepository {
     location,
     value_hour,
     obs,
-    days,
-    schedules,
+    open_time,
+    close_time,
     available,
   }: ICreateField): Promise<Field> {
     const field = this.ormRepository.create({
@@ -25,8 +25,8 @@ class FieldsRepository implements IFieldsRepository {
       location,
       value_hour,
       obs,
-      days,
-      schedules,
+      open_time,
+      close_time,
       available,
     });
 
