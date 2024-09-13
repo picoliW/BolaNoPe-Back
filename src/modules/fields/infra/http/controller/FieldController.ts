@@ -30,6 +30,8 @@ export default class FieldsController {
       available,
     } = request.body;
 
+    const file = request.file;
+
     const createField = container.resolve(CreateFieldService);
 
     try {
@@ -41,6 +43,7 @@ export default class FieldsController {
         open_time,
         close_time,
         available,
+        file,
       });
 
       return response.status(201).json({ field });
@@ -87,6 +90,7 @@ export default class FieldsController {
       location,
       value_hour,
       obs,
+      file_url,
       open_time,
       close_time,
       available,
@@ -101,6 +105,7 @@ export default class FieldsController {
         location,
         value_hour,
         obs,
+        file_url,
         open_time,
         close_time,
         available,

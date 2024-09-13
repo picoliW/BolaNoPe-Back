@@ -19,6 +19,9 @@ class Field {
   obs: string;
 
   @Column()
+  file_url: string;
+
+  @Column()
   open_time: string;
 
   @Column()
