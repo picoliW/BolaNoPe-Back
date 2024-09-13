@@ -2,12 +2,12 @@
 
 O projeto consiste em uma aplicação para criação de times personalizados, marcar aulas, organizar torneios, conversar em fórum e reservar quadras de futebol afiliadas ao Bola no Pé.
 
-## Tecnologias Utilizadas
+## Features
 
 | Feature                            | Estado |
 | ---------------------------------- | ------ |
 | Reserva de quadras                 | ✅     |
-| Cadastro de usuário                | ✅     |
+| Cadastro de usuários               | ✅     |
 | Permitir que admin tenha controle  | ✅     |
 | Promover a saúde e o bem-estar     | ✅     |
 | Criação e organização de times     | ⌛     |
