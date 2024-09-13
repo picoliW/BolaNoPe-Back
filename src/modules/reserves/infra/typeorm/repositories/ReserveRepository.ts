@@ -44,7 +44,7 @@ class ReserveRepository implements IReserveRepository {
   }
 
   public async findByParams(params: Record<string, any>): Promise<Reserve[]> {
-    return this.ormRepository.find({
+    return await this.ormRepository.find({
       where: params,
     });
   }
