@@ -40,6 +40,7 @@ fieldsRouter.post(
 
 fieldsRouter.put(
   "/:id",
+  upload.single("file_url"),
   validateObjectIdMIddleware,
   UpdateFieldSchema,
   ensureAuthenticated,

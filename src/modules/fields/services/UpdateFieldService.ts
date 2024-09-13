@@ -19,11 +19,11 @@ class UpdateFieldService {
     location,
     value_hour,
     obs,
-    file_url,
     open_time,
     close_time,
     available,
-  }: IUpdateField): Promise<Partial<Field>> {
+    file,
+  }: IUpdateField & { file?: Express.Multer.File }): Promise<Partial<Field>> {
     const field = await this.fieldRepository.findById(new ObjectId(_id));
 
     if (!field) {
@@ -60,9 +60,11 @@ class UpdateFieldService {
       field.available = available;
       updatedFields.available = available;
     }
-    if (file_url) {
-      field.file_url = file_url;
-      updatedFields.file_url = file_url;
+
+    // Tratar o arquivo se ele for enviado
+    if (file) {
+      field.file_url = file.path;
+      updatedFields.file_url = file.path;
     }
 
     await this.fieldRepository.save(field);

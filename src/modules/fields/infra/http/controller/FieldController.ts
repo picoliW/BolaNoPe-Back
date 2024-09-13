@@ -90,14 +90,16 @@ export default class FieldsController {
       location,
       value_hour,
       obs,
-      file_url,
       open_time,
       close_time,
       available,
     } = req.body;
+  
+    const file = req.file;
+  
     const updateFieldService = container.resolve(UpdateFieldService);
     const objectId = new ObjectId(id);
-
+  
     try {
       const updatedFields = await updateFieldService.execute({
         _id: objectId,
@@ -105,12 +107,12 @@ export default class FieldsController {
         location,
         value_hour,
         obs,
-        file_url,
         open_time,
         close_time,
         available,
+        file,
       });
-
+  
       return res.status(200).json(updatedFields);
     } catch (error) {
       if (error instanceof NotFoundError) {
