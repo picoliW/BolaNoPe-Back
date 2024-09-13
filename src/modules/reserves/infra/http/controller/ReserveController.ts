@@ -22,13 +22,20 @@ export default class ReserveController {
 
   public async create(request: Request, response: Response): Promise<Response> {
     try {
-      const { id_user, start_hour, end_hour, id_field, final_value } =
-        request.body;
+      const {
+        id_user,
+        reserve_day,
+        start_hour,
+        end_hour,
+        id_field,
+        final_value,
+      } = request.body;
 
       const createReserve = container.resolve(CreateReserveService);
 
       const reserve = await createReserve.execute({
         id_user,
+        reserve_day,
         start_hour,
         end_hour,
         id_field,
@@ -67,11 +74,12 @@ export default class ReserveController {
   public async update(req: Request, res: Response): Promise<Response> {
     try {
       const { id } = req.params;
-      const { id_user, start_hour, end_hour, id_field } = req.body;
+      const { id_user, reserve_day, start_hour, end_hour, id_field } = req.body;
       const updateReserve = container.resolve(UpdateReserveService);
       const objectId = new ObjectId(id);
       const reserve = await updateReserve.execute({
         _id: objectId,
+        reserve_day,
         id_user,
         start_hour,
         end_hour,

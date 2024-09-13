@@ -20,6 +20,7 @@ class CreateReserveService {
 
   public async execute({
     id_user,
+    reserve_day,
     start_hour,
     end_hour,
     id_field,
@@ -44,6 +45,7 @@ class CreateReserveService {
 
     const reserve = await this.reserveRepository.create({
       id_user,
+      reserve_day,
       start_hour,
       end_hour,
       id_field,

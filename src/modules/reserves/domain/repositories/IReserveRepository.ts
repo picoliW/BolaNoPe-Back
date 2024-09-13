@@ -5,6 +5,7 @@ import Reserve from "@modules/reserves/infra/typeorm/entities/Reserve";
 export interface IReserveRepository {
   create({
     id_user,
+    reserve_day,
     start_hour,
     end_hour,
     id_field,
