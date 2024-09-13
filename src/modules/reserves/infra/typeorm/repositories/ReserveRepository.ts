@@ -13,6 +13,7 @@ class ReserveRepository implements IReserveRepository {
 
   public async create({
     id_user,
+    reserve_day,
     start_hour,
     end_hour,
     id_field,
@@ -20,6 +21,7 @@ class ReserveRepository implements IReserveRepository {
   }: ICreateReserve): Promise<Reserve> {
     const reserve = this.ormRepository.create({
       id_user,
+      reserve_day,
       start_hour,
       end_hour,
       id_field,
@@ -42,7 +44,7 @@ class ReserveRepository implements IReserveRepository {
   }
 
   public async findByParams(params: Record<string, any>): Promise<Reserve[]> {
-    return this.ormRepository.find({
+    return await this.ormRepository.find({
       where: params,
     });
   }

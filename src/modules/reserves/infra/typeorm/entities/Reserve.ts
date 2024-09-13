@@ -13,6 +13,9 @@ class Reserve {
   id_user: string;
 
   @Column()
+  reserve_day: string;
+
+  @Column()
   start_hour: string;
 
   @Column()
