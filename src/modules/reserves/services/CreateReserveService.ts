@@ -3,6 +3,7 @@ import Reserve from "../infra/typeorm/entities/Reserve";
 import { ObjectId } from "mongodb";
 import { IUsersRepository } from "@modules/users/domain/repositories/IUsersRepository";
 import { NotFoundError } from "@shared/errors/NotFoundError";
+import { ConflictError } from "@shared/errors/ConflictError";
 import { IReserveRepository } from "../domain/repositories/IReserveRepository";
 import { IFieldsRepository } from "@modules/fields/domain/repositories/IFieldRepository";
 import { ICreateReserve } from "../domain/models/ICreateReserve";
@@ -35,12 +36,21 @@ class CreateReserveService {
       throw new NotFoundError("Field not found");
     }
 
-    const value_hour = parseFloat(field.value_hour);
+    const overlappingReserve = await this.reserveRepository.findByParams({
+      id_field,
+      reserve_day,
+      start_hour: { $lt: end_hour },
+      end_hour: { $gt: start_hour },
+    });
 
+    if (overlappingReserve.length > 0) {
+      throw new ConflictError("Field is already reserved during this time.");
+    }
+
+    const value_hour = parseFloat(field.value_hour);
     const start = new Date(`1970-01-01T${start_hour}:00Z`).getTime();
     const end = new Date(`1970-01-01T${end_hour}:00Z`).getTime();
     const durationHours = (end - start) / (1000 * 60 * 60);
-
     const final_value = durationHours * value_hour;
 
     const reserve = await this.reserveRepository.create({
