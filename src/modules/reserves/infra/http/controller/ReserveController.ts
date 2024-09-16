@@ -116,8 +116,6 @@ export default class ReserveController {
 
     const reserves = await listReserveByField.execute(id_field);
 
-    return res.json({
-      reserves,
-    });
+    return res.json(reserves);
   }
 }
