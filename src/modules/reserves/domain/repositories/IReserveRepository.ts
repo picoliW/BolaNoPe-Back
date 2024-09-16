@@ -17,4 +17,5 @@ export interface IReserveRepository {
   update(reserve: Reserve): Promise<Reserve>;
   remove(reserve: Reserve): Promise<void>;
   findByParams(params: Record<string, any>): Promise<Reserve[]>;
+  findByField(id_field: string): Promise<Reserve[]>;
 }

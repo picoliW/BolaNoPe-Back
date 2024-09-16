@@ -63,6 +63,13 @@ class ReserveRepository implements IReserveRepository {
   public async remove(reserve: Reserve): Promise<void> {
     await this.ormRepository.remove(reserve);
   }
+
+  public async findByField(id_field: string): Promise<Reserve[]> {
+    return await this.ormRepository.find({
+      where: { id_field },
+      order: { reserve_day: "DESC" },
+    });
+  }
 }
 
 export default ReserveRepository;
