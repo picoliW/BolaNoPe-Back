@@ -27,4 +27,6 @@ reserveRouter.delete(
   reserveController.delete,
 );
 
+reserveRouter.get("/field/:id_field", reserveController.listByField);
+
 export default reserveRouter;
