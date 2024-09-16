@@ -9,6 +9,7 @@ import CreateReserveService from "@modules/reserves/services/CreateReserveServic
 import ShowOneReserveService from "@modules/reserves/services/ShowOneReserveService";
 import UpdateReserveService from "@modules/reserves/services/UpdateReserveService";
 import DeleteReserveService from "@modules/reserves/services/DeleteReserveService";
+import ListReserveByFieldService from "@modules/reserves/services/ListReserveByFieldService";
 
 export default class ReserveController {
   public async index(req: Request, res: Response): Promise<Response> {
@@ -106,5 +107,17 @@ export default class ReserveController {
     } catch (error) {
       return res.status(404).json({ message: "Reserve not found" });
     }
+  }
+
+  public async listByField(req: Request, res: Response): Promise<Response> {
+    const { id_field } = req.params;
+
+    const listReserveByField = container.resolve(ListReserveByFieldService);
+
+    const reserves = await listReserveByField.execute(id_field);
+
+    return res.json({
+      reserves,
+    });
   }
 }
