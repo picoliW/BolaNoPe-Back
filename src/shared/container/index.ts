@@ -2,6 +2,8 @@ import { IFieldsRepository } from "@modules/fields/domain/repositories/IFieldRep
 import FieldsRepository from "@modules/fields/infra/typeorm/repositories/FieldRepository";
 import { IReserveRepository } from "@modules/reserves/domain/repositories/IReserveRepository";
 import ReserveRepository from "@modules/reserves/infra/typeorm/repositories/ReserveRepository";
+import { ITourneyRepository } from "@modules/tourneys/domain/repositories/ITourneyRepository";
+import TourneysRepository from "@modules/tourneys/infra/typeorm/repositories/TourneyRepository";
 import { IUsersRepository } from "@modules/users/domain/repositories/IUsersRepository";
 import UsersRepository from "@modules/users/infra/typeorm/repositories/UserRepository";
 import { container } from "tsyringe";
@@ -19,4 +21,9 @@ container.registerSingleton<IFieldsRepository>(
 container.registerSingleton<IReserveRepository>(
   "ReservesRepository",
   ReserveRepository,
+);
+
+container.registerSingleton<ITourneyRepository>(
+  "TourneysRepository",
+  TourneysRepository,
 );
