@@ -9,6 +9,7 @@ import CreateTeamService from "@modules/teams/services/CreateTeamService";
 import DeleteTeamService from "@modules/teams/services/DeleteTeamService";
 import ShowOneTeamService from "@modules/teams/services/ShowOneTeamService";
 import UpdateTeamService from "@modules/teams/services/UpdateTeamService";
+import { UnauthorizedError } from "@shared/errors/UnauthorizedError";
 
 export default class TeamsController {
   public async index(req: Request, res: Response): Promise<Response> {
@@ -56,10 +57,19 @@ export default class TeamsController {
 
     try {
       const objectId = new ObjectId(id);
-      await deleteTeam.execute({ _id: objectId });
+      const userId = req.user.id; // Assuming user ID is stored in req.user after authentication
+      await deleteTeam.execute({ _id: objectId, userId });
+
       return res.status(204).json();
     } catch (error) {
-      return res.status(404).json({ message: "Team not found" });
+      if (
+        error instanceof NotFoundError ||
+        error instanceof UnauthorizedError
+      ) {
+        return res.status(404).json({ message: error.message });
+      }
+
+      throw error;
     }
   }
 

@@ -17,7 +17,7 @@ teamsRouter.post(
 
 teamsRouter.get("/", teamsController.index);
 
-teamsRouter.delete("/:id", teamsController.delete);
+teamsRouter.delete("/:id", ensureAuthenticated, teamsController.delete);
 
 teamsRouter.get("/:id", teamsController.show);
 

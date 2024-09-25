@@ -3,6 +3,7 @@ import { NotFoundError } from "@shared/errors/NotFoundError";
 import { ObjectId } from "mongodb";
 import { ITeamRepository } from "../domain/repositories/ITeamRepository";
 import { IDeleteTeam } from "../domain/models/IDeleteTeam";
+import { UnauthorizedError } from "@shared/errors/UnauthorizedError";
 
 @injectable()
 class DeleteTeamService {
@@ -11,12 +12,16 @@ class DeleteTeamService {
     private teamRepository: ITeamRepository,
   ) {}
 
-  public async execute({ _id }: IDeleteTeam): Promise<void> {
+  public async execute({ _id, userId }: IDeleteTeam): Promise<void> {
     try {
       const team = await this.teamRepository.findById(new ObjectId(_id));
 
       if (!team) {
         throw new NotFoundError("Team not found");
+      }
+
+      if (team.leader_id.toString() !== userId) {
+        throw new UnauthorizedError("Only the team leader can delete the team");
       }
 
       await this.teamRepository.remove(team);
