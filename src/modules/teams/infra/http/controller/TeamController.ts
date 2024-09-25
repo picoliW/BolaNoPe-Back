@@ -20,19 +20,24 @@ export default class TeamsController {
   }
 
   public async create(request: Request, response: Response): Promise<Response> {
-    const { name, description, leader_id, members_id, tourneys_id } =
-      request.body;
+    const { name, description, members_id, tourneys_id } = request.body;
+
+    // Extract the logged-in user's ID from the request
+    const loggedInUserId = request.user.id; // Assuming middleware sets request.user
 
     const createTeam = container.resolve(CreateTeamService);
 
     try {
-      const team = await createTeam.execute({
-        name,
-        description,
-        leader_id,
-        members_id,
-        tourneys_id,
-      });
+      const team = await createTeam.execute(
+        {
+          name,
+          description,
+          leader_id: loggedInUserId,
+          members_id,
+          tourneys_id,
+        },
+        loggedInUserId,
+      );
 
       return response.status(201).json({ team });
     } catch (error) {

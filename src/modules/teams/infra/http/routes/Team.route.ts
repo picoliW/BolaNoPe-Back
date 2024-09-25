@@ -3,11 +3,17 @@ import { container } from "tsyringe";
 import TeamsController from "../controller/TeamController";
 import { CreateTeamSchema } from "../../schemas/CreateTeamSchema";
 import { UpdateTeamSchema } from "../../schemas/UpdateTeamSchema";
+import ensureAuthenticated from "@shared/infra/http/middlewares/UserAuthMiddleware";
 
 const teamsRouter = Router();
 const teamsController = container.resolve(TeamsController);
 
-teamsRouter.post("/", CreateTeamSchema, teamsController.create);
+teamsRouter.post(
+  "/",
+  ensureAuthenticated,
+  CreateTeamSchema,
+  teamsController.create,
+);
 
 teamsRouter.get("/", teamsController.index);
 

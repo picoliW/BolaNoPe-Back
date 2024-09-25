@@ -10,24 +10,25 @@ class CreateTeamService {
     private teamsRepository: ITeamRepository,
   ) {}
 
-  public async execute({
-    name,
-    description,
-    leader_id,
-    members_id,
-    tourneys_id,
-  }: ICreateTeam): Promise<Team> {
-    const tourney = await this.teamsRepository.create({
+  public async execute(
+    { name, description, leader_id, members_id, tourneys_id }: ICreateTeam,
+    loggedInUserId: string,
+  ): Promise<Team> {
+    const updatedMembersId = members_id
+      ? [...members_id, loggedInUserId]
+      : [loggedInUserId];
+
+    const team = await this.teamsRepository.create({
       name,
       description,
-      leader_id,
-      members_id,
+      leader_id: loggedInUserId,
+      members_id: updatedMembersId,
       tourneys_id,
     });
 
-    await this.teamsRepository.save(tourney);
+    await this.teamsRepository.save(team);
 
-    return tourney;
+    return team;
   }
 }
 
