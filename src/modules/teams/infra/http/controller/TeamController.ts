@@ -23,8 +23,7 @@ export default class TeamsController {
   public async create(request: Request, response: Response): Promise<Response> {
     const { name, description, members_id, tourneys_id } = request.body;
 
-    // Extract the logged-in user's ID from the request
-    const loggedInUserId = request.user.id; // Assuming middleware sets request.user
+    const loggedInUserId = request.user.id;
 
     const createTeam = container.resolve(CreateTeamService);
 
@@ -40,7 +39,7 @@ export default class TeamsController {
         loggedInUserId,
       );
 
-      return response.status(201).json({ team });
+      return response.status(201).json(team);
     } catch (error) {
       if (error instanceof ConflictError) {
         return response.status(409).json({ message: error.message });
@@ -57,7 +56,7 @@ export default class TeamsController {
 
     try {
       const objectId = new ObjectId(id);
-      const userId = req.user.id; // Assuming user ID is stored in req.user after authentication
+      const userId = req.user.id;
       await deleteTeam.execute({ _id: objectId, userId });
 
       return res.status(204).json();

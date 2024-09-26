@@ -61,7 +61,6 @@ class UpdateFieldService {
       updatedFields.available = available;
     }
 
-    // Tratar o arquivo se ele for enviado
     if (file) {
       field.file_url = file.path;
       updatedFields.file_url = file.path;
