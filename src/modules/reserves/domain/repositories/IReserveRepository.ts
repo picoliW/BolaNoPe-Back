@@ -5,6 +5,7 @@ import Reserve from "@modules/reserves/infra/typeorm/entities/Reserve";
 export interface IReserveRepository {
   create({
     id_user,
+    reserve_day,
     start_hour,
     end_hour,
     id_field,
@@ -15,4 +16,6 @@ export interface IReserveRepository {
   findById(id: ObjectId): Promise<Reserve | null>;
   update(reserve: Reserve): Promise<Reserve>;
   remove(reserve: Reserve): Promise<void>;
+  findByParams(params: Record<string, any>): Promise<Reserve[]>;
+  findByField(id_field: string): Promise<Reserve[]>;
 }

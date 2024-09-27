@@ -18,12 +18,20 @@ class CreateFieldService {
     open_time,
     close_time,
     available,
-  }: ICreateField): Promise<Field> {
+    file,
+  }: ICreateField & { file?: Express.Multer.File }): Promise<Field> {
+    let file_url = "";
+
+    if (file) {
+      file_url = file.path;
+    }
+
     const field = await this.fieldsRepository.create({
       name,
       location,
       value_hour,
       obs,
+      file_url,
       open_time,
       close_time,
       available,

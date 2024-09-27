@@ -30,6 +30,8 @@ export default class FieldsController {
       available,
     } = request.body;
 
+    const file = request.file;
+
     const createField = container.resolve(CreateFieldService);
 
     try {
@@ -41,6 +43,7 @@ export default class FieldsController {
         open_time,
         close_time,
         available,
+        file,
       });
 
       return response.status(201).json({ field });
@@ -91,9 +94,12 @@ export default class FieldsController {
       close_time,
       available,
     } = req.body;
+  
+    const file = req.file;
+  
     const updateFieldService = container.resolve(UpdateFieldService);
     const objectId = new ObjectId(id);
-
+  
     try {
       const updatedFields = await updateFieldService.execute({
         _id: objectId,
@@ -104,8 +110,9 @@ export default class FieldsController {
         open_time,
         close_time,
         available,
+        file,
       });
-
+  
       return res.status(200).json(updatedFields);
     } catch (error) {
       if (error instanceof NotFoundError) {

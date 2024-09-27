@@ -8,6 +8,7 @@ export interface IFieldsRepository {
     location,
     value_hour,
     obs,
+    file_url,
     open_time,
     close_time,
     available,
