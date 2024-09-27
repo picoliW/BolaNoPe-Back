@@ -14,14 +14,17 @@ class CreateTeamService {
     { name, description, leader_id, members_id, tourneys_id }: ICreateTeam,
     loggedInUserId: string,
   ): Promise<Team> {
+    if (members_id && members_id.includes(leader_id)) {
+      members_id.splice(members_id.indexOf(leader_id), 1);
+    }
     const updatedMembersId = members_id
-      ? [...members_id, loggedInUserId]
-      : [loggedInUserId];
+      ? [...members_id, leader_id]
+      : [leader_id];
 
     const team = await this.teamsRepository.create({
       name,
       description,
-      leader_id: loggedInUserId,
+      leader_id: leader_id,
       members_id: updatedMembersId,
       tourneys_id,
     });
