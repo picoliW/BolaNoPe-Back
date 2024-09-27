@@ -21,7 +21,7 @@ export default class TeamsController {
   }
 
   public async create(request: Request, response: Response): Promise<Response> {
-    const { name, description, members_id, tourneys_id } = request.body;
+    const { name, leader_id, description, members_id, tourneys_id } = request.body;
 
     const loggedInUserId = request.user.id;
 
@@ -32,7 +32,7 @@ export default class TeamsController {
         {
           name,
           description,
-          leader_id: loggedInUserId,
+          leader_id,
           members_id,
           tourneys_id,
         },
