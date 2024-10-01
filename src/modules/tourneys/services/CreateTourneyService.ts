@@ -15,12 +15,18 @@ class CreateTourneyService {
     description,
     prize,
     id_teams,
+    id_winner_team,
+    date_from,
+    date_until,
   }: ICreateTourney): Promise<Tourney> {
     const tourney = await this.tourneysRepository.create({
       name,
       description,
       prize,
       id_teams,
+      id_winner_team,
+      date_from,
+      date_until,
     });
 
     await this.tourneysRepository.save(tourney);
