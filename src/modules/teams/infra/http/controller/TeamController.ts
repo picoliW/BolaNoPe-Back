@@ -10,6 +10,8 @@ import DeleteTeamService from "@modules/teams/services/DeleteTeamService";
 import ShowOneTeamService from "@modules/teams/services/ShowOneTeamService";
 import UpdateTeamService from "@modules/teams/services/UpdateTeamService";
 import { UnauthorizedError } from "@shared/errors/UnauthorizedError";
+import TeamsRepository from "../../typeorm/repositories/TeamRepositoy";
+import ListTeamsByMemberService from "@modules/teams/services/ListTeamByMemberService";
 
 export default class TeamsController {
   public async index(req: Request, res: Response): Promise<Response> {
@@ -21,7 +23,8 @@ export default class TeamsController {
   }
 
   public async create(request: Request, response: Response): Promise<Response> {
-    const { name, leader_id, description, members_id, tourneys_id } = request.body;
+    const { name, leader_id, description, members_id, tourneys_id } =
+      request.body;
 
     const loggedInUserId = request.user.id;
 
@@ -113,5 +116,17 @@ export default class TeamsController {
       }
       throw error;
     }
+  }
+
+  public async findByMemberId(req: Request, res: Response): Promise<Response> {
+    const { memberId } = req.params;
+
+    const objectId = new ObjectId(memberId);
+
+    const teamsRepository = container.resolve(TeamsRepository);
+
+    const teams = await teamsRepository.findByMemberId(objectId);
+
+    return res.json(teams);
   }
 }
