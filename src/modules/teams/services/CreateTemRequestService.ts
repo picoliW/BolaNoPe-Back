@@ -5,6 +5,7 @@ import { NotFoundError } from "@shared/errors/NotFoundError";
 import TeamRequest from "../infra/typeorm/entities/TeamRequest";
 import { ObjectId } from "mongodb";
 import { ITeamRequestRepository } from "../domain/repositories/ITeamRequestRepository";
+import { BadRequestError } from "@shared/errors/BadRequestError";
 
 @injectable()
 class CreateTeamRequestService {
@@ -29,7 +30,7 @@ class CreateTeamRequestService {
     );
 
     if (existingRequest) {
-      throw new Error("Solicitação já enviada.");
+      throw new BadRequestError("Solicitação já enviada.");
     }
 
     const request = await this.teamRequestRepository.create({
