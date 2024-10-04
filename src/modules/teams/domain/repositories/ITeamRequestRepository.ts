@@ -11,4 +11,5 @@ export interface ITeamRequestRepository {
     teamId: string,
     userId: string,
   ): Promise<TeamRequest | null>;
+  findByTeamId(teamId: string): Promise<TeamRequest[]>;
 }

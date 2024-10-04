@@ -33,6 +33,12 @@ class TeamRequestRepository {
       where: { team_id: teamId, user_id: userId, status: "pending" },
     });
   }
+
+  public async findByTeamId(teamId: string): Promise<TeamRequest[]> {
+    return this.ormRepository.find({
+      where: { team_id: teamId },
+    });
+  }
 }
 
 export default TeamRequestRepository;

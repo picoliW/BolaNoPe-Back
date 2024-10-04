@@ -5,6 +5,7 @@ import CreateTeamRequestService from "@modules/teams/services/CreateTemRequestSe
 import { NotFoundError } from "@shared/errors/NotFoundError";
 import { ConflictError } from "@shared/errors/ConflictError";
 import { BadRequestError } from "@shared/errors/BadRequestError";
+import ListTeamRequestsService from "@modules/teams/services/ListTeamRequestService";
 
 export default class TeamRequestController {
   public async create(req: Request, res: Response): Promise<Response> {
@@ -48,6 +49,24 @@ export default class TeamRequestController {
         return res.status(404).json({ message: error.message });
       } else if (error instanceof ConflictError) {
         return res.status(409).json({ message: error.message });
+      } else if (error instanceof BadRequestError) {
+        return res.status(400).json({ message: error.message });
+      }
+      return res.status(500).json({ message: "Internal server error" });
+    }
+  }
+
+  public async listByTeam(req: Request, res: Response): Promise<Response> {
+    const { teamId } = req.params;
+
+    const listTeamRequestsService = container.resolve(ListTeamRequestsService);
+
+    try {
+      const requests = await listTeamRequestsService.execute(teamId);
+      return res.status(200).json(requests);
+    } catch (error) {
+      if (error instanceof NotFoundError) {
+        return res.status(404).json({ message: error.message });
       } else if (error instanceof BadRequestError) {
         return res.status(400).json({ message: error.message });
       }

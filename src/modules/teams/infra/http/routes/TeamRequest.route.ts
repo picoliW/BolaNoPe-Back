@@ -13,4 +13,10 @@ teamRequestsRouter.post(
   teamRequestController.handle,
 );
 
+teamRequestsRouter.get(
+  "/team/:teamId",
+  ensureAuthenticated,
+  teamRequestController.listByTeam,
+);
+
 export default teamRequestsRouter;
