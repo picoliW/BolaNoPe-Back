@@ -4,6 +4,7 @@ import { ITeamRepository } from "../domain/repositories/ITeamRepository";
 import { NotFoundError } from "@shared/errors/NotFoundError";
 import TeamRequest from "../infra/typeorm/entities/TeamRequest";
 import { ObjectId } from "mongodb";
+import { ITeamRequestRepository } from "../domain/repositories/ITeamRequestRepository";
 
 @injectable()
 class CreateTeamRequestService {
