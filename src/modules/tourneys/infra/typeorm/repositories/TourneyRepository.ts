@@ -16,12 +16,18 @@ class TourneysRepository implements ITourneyRepository {
     description,
     prize,
     id_teams,
+    id_winner_team,
+    date_from,
+    date_until,
   }: ICreateTourney): Promise<Tourney> {
     const tourney = this.ormRepository.create({
       name,
       description,
       prize,
       id_teams,
+      id_winner_team,
+      date_from,
+      date_until,
     });
 
     await this.ormRepository.save(tourney);

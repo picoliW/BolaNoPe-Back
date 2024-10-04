@@ -3,7 +3,9 @@ import FieldsRepository from "@modules/fields/infra/typeorm/repositories/FieldRe
 import { IReserveRepository } from "@modules/reserves/domain/repositories/IReserveRepository";
 import ReserveRepository from "@modules/reserves/infra/typeorm/repositories/ReserveRepository";
 import { ITeamRepository } from "@modules/teams/domain/repositories/ITeamRepository";
+import { ITeamRequestRepository } from "@modules/teams/domain/repositories/ITeamRequestRepository";
 import TeamsRepository from "@modules/teams/infra/typeorm/repositories/TeamRepositoy";
+import TeamRequestRepository from "@modules/teams/infra/typeorm/repositories/TeamRequestRepository";
 import { ITourneyRepository } from "@modules/tourneys/domain/repositories/ITourneyRepository";
 import TourneysRepository from "@modules/tourneys/infra/typeorm/repositories/TourneyRepository";
 import { IUsersRepository } from "@modules/users/domain/repositories/IUsersRepository";
@@ -33,4 +35,9 @@ container.registerSingleton<ITourneyRepository>(
 container.registerSingleton<ITeamRepository>(
   "TeamsRepository",
   TeamsRepository,
+);
+
+container.registerSingleton<ITeamRequestRepository>(
+  "TeamRequestRepository",
+  TeamRequestRepository,
 );

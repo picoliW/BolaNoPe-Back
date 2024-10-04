@@ -20,7 +20,15 @@ export default class TourneysController {
   }
 
   public async create(request: Request, response: Response): Promise<Response> {
-    const { name, description, prize, id_teams } = request.body;
+    const {
+      name,
+      description,
+      prize,
+      id_teams,
+      id_winner_team,
+      date_from,
+      date_until,
+    } = request.body;
 
     const createTourney = container.resolve(CreateTourneyService);
 
@@ -30,6 +38,9 @@ export default class TourneysController {
         description,
         prize,
         id_teams,
+        id_winner_team,
+        date_from,
+        date_until,
       });
 
       return response.status(201).json({ tourney });
@@ -71,7 +82,15 @@ export default class TourneysController {
 
   public async update(req: Request, res: Response): Promise<Response> {
     const { id } = req.params;
-    const { name, description, prize, id_teams } = req.body;
+    const {
+      name,
+      description,
+      prize,
+      id_teams,
+      id_winner_team,
+      date_from,
+      date_until,
+    } = req.body;
 
     const updateTourneyService = container.resolve(UpdateTourneyService);
     const objectId = new ObjectId(id);
@@ -83,6 +102,9 @@ export default class TourneysController {
         description,
         prize,
         id_teams,
+        id_winner_team,
+        date_from,
+        date_until,
       });
 
       return res.status(200).json(updatedTourneys);

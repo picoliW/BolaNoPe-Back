@@ -6,5 +6,8 @@ export const CreateTourneySchema = celebrate({
     description: Joi.string(),
     prize: Joi.string(),
     id_teams: Joi.array().required(),
+    id_winner_team: Joi.string(),
+    date_from: Joi.string().required(),
+    date_until: Joi.string().required(),
   },
 });

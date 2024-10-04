@@ -8,6 +8,9 @@ export interface ITourneyRepository {
     description,
     prize,
     id_teams,
+    id_winner_team,
+    date_from,
+    date_until,
   }: ICreateTourney): Promise<Tourney>;
   save(tourney: Tourney): Promise<Tourney>;
   find(): Promise<Tourney[]>;

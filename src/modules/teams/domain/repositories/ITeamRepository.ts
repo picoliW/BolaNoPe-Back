@@ -15,4 +15,5 @@ export interface ITeamRepository {
   remove(team: Team): Promise<void>;
   findById(id: ObjectId): Promise<Team | null>;
   update(team: Team): Promise<Team>;
+  findByMemberId(memberId: ObjectId): Promise<Team[]>;
 }

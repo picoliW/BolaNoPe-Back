@@ -17,6 +17,15 @@ class Tourney {
 
   @Column()
   id_teams: string[];
+
+  @Column()
+  id_winner_team: string;
+
+  @Column()
+  date_from: string;
+
+  @Column()
+  date_until: string;
 }
 
 export default Tourney;

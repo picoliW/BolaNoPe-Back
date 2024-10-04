@@ -55,6 +55,15 @@ class TeamsRepository implements ITeamRepository {
   public async update(team: Team): Promise<Team> {
     return this.ormRepository.save(team);
   }
+
+  public async findByMemberId(memberId: ObjectId): Promise<Team[]> {
+    const teams = await this.ormRepository.find({
+      where: {
+        members_id: memberId.toString(),
+      },
+    });
+    return teams;
+  }
 }
 
 export default TeamsRepository;

@@ -19,6 +19,8 @@ class UpdateTourneyService {
     description,
     prize,
     id_teams,
+    date_from,
+    date_until,
   }: IUpdateTourney): Promise<Partial<Tourney>> {
     const tourney = await this.tourneyRepository.findById(new ObjectId(_id));
 
@@ -43,6 +45,14 @@ class UpdateTourneyService {
     if (id_teams) {
       tourney.id_teams = id_teams;
       updatedTourneys.id_teams = id_teams;
+    }
+    if (date_from) {
+      tourney.date_from = date_from;
+      updatedTourneys.date_from = date_from;
+    }
+    if (date_until) {
+      tourney.date_until = date_until;
+      updatedTourneys.date_until = date_until;
     }
 
     await this.tourneyRepository.save(tourney);
