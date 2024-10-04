@@ -2,9 +2,12 @@ import { inject, injectable } from "tsyringe";
 import { ITeamRepository } from "../domain/repositories/ITeamRepository";
 import { ICreateTeam } from "../domain/models/ICreateTeam";
 import Team from "../infra/typeorm/entities/Team";
+import { BadRequestError } from "@shared/errors/BadRequestError";
 
 @injectable()
 class CreateTeamService {
+  private MAX_TEAM_MEMBERS = 5;
+
   constructor(
     @inject("TeamsRepository")
     private teamsRepository: ITeamRepository,
@@ -17,9 +20,16 @@ class CreateTeamService {
     if (members_id && members_id.includes(leader_id)) {
       members_id.splice(members_id.indexOf(leader_id), 1);
     }
+
     const updatedMembersId = members_id
       ? [...members_id, leader_id]
       : [leader_id];
+
+    if (updatedMembersId.length > this.MAX_TEAM_MEMBERS) {
+      throw new BadRequestError(
+        `A equipe pode ter no máximo ${this.MAX_TEAM_MEMBERS} membros.`,
+      );
+    }
 
     const team = await this.teamsRepository.create({
       name,
