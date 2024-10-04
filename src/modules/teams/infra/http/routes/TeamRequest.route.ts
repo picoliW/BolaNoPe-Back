@@ -19,4 +19,10 @@ teamRequestsRouter.get(
   teamRequestController.listByTeam,
 );
 
+teamRequestsRouter.get(
+  "/check/:teamId",
+  ensureAuthenticated,
+  teamRequestController.check,
+);
+
 export default teamRequestsRouter;
