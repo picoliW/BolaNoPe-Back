@@ -17,6 +17,8 @@ teamsRouter.post(
   teamsController.create,
 );
 
+teamsRouter.get("/leader", ensureAuthenticated, teamsController.findByLeader);
+
 teamsRouter.get("/", teamsController.index);
 
 teamsRouter.get("/members/:memberId", teamsController.findByMemberId);
