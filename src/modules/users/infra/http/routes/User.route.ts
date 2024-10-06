@@ -25,7 +25,7 @@ const storage = multer.diskStorage({
 
 const upload = multer({ storage: storage });
 
-usersRouter.post("/", CreateUserSchema, CPFValidator, upload.single("file_url"), usersController.create);
+usersRouter.post("/", upload.single("file_url"), CreateUserSchema, CPFValidator, usersController.create);
 usersRouter.get("/", usersController.index);
 usersRouter.delete("/:id", validateObjectIdMIddleware, usersController.delete);
 usersRouter.get("/:id", validateObjectIdMIddleware, usersController.show);
