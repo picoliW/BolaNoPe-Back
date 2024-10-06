@@ -24,7 +24,8 @@ class UpdateUserService {
     email,
     password,
     cep,
-  }: IUpdateUser): Promise<Partial<User>> {
+    file
+  }: IUpdateUser & { file?: Express.Multer.File }): Promise<Partial<User>> {
     const user = await this.userRepository.findById(new ObjectId(_id));
 
     if (!user) {
@@ -69,6 +70,11 @@ class UpdateUserService {
     if (cep) {
       user.cep = cep;
       updatedFields.cep = cep;
+    }
+
+    if (file) {
+      user.file_url = file.path;
+      updatedFields.file_url = file.path;
     }
 
     if (cpf || cep) {

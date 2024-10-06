@@ -21,6 +21,7 @@ export default class UsersController {
 
   public async create(request: Request, response: Response): Promise<Response> {
     const { name, cpf, birth, email, password, cep, role } = request.body;
+    const file = request.file;
 
     const createUser = container.resolve(CreateUserService);
 
@@ -33,6 +34,7 @@ export default class UsersController {
         password,
         cep,
         role,
+        file,
       });
 
       return response.status(201).json({ user, token });
@@ -75,6 +77,7 @@ export default class UsersController {
   public async update(req: Request, res: Response): Promise<Response> {
     const { id } = req.params;
     const { name, cpf, birth, email, password, cep } = req.body;
+    const file = req.file;
     const updateUserService = container.resolve(UpdateUserService);
     const objectId = new ObjectId(id);
 
@@ -87,6 +90,7 @@ export default class UsersController {
         email,
         password,
         cep,
+        file
       });
 
       return res.status(200).json(updatedFields);
