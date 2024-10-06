@@ -11,7 +11,6 @@ import ShowOneTeamService from "@modules/teams/services/ShowOneTeamService";
 import UpdateTeamService from "@modules/teams/services/UpdateTeamService";
 import { UnauthorizedError } from "@shared/errors/UnauthorizedError";
 import TeamsRepository from "../../typeorm/repositories/TeamRepositoy";
-import ListTeamsByMemberService from "@modules/teams/services/ListTeamByMemberService";
 import ListTeamsByLeaderService from "@modules/teams/services/ListTeamsByLeaderService";
 
 export default class TeamsController {
@@ -132,7 +131,7 @@ export default class TeamsController {
   }
 
   public async findByLeader(req: Request, res: Response): Promise<Response> {
-    const userId = req.user.id; // Obter o ID do usuário logado
+    const userId = req.user.id;
 
     const listTeamsByLeader = container.resolve(ListTeamsByLeaderService);
 
