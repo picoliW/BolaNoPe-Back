@@ -25,4 +25,10 @@ teamRequestsRouter.get(
   teamRequestController.check,
 );
 
+teamRequestsRouter.get(
+  "/pending/:teamId",
+  ensureAuthenticated,
+  teamRequestController.countPendingRequests,
+);
+
 export default teamRequestsRouter;
