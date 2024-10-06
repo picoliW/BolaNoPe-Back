@@ -11,4 +11,5 @@ export interface ICreateUser {
   neighborhood?: string;
   locality?: string;
   uf?: string;
+  file_url?: string;
 }

@@ -23,7 +23,14 @@ class CreateUserService {
     password,
     cep,
     role = "user",
-  }: ICreateUser): Promise<{ user: User; token: string }> {
+    file
+  }: ICreateUser & { file?: Express.Multer.File }): Promise<{ user: User; token: string }> {
+    let file_url = "";
+
+    if (file) {
+      file_url = file.path;
+    }
+
     const existingUser = await this.usersRepository.findByCPF(cpf);
     if (existingUser) {
       throw new ConflictError("CPF already exists");
@@ -60,6 +67,7 @@ class CreateUserService {
       neighborhood: addressFields.bairro,
       locality: addressFields.localidade,
       uf: addressFields.uf,
+      file_url,
     });
 
     await this.usersRepository.save(user);

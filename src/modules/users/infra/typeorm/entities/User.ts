@@ -42,6 +42,9 @@ class User {
 
   @Column()
   uf: string;
+
+  @Column()
+  file_url: string;
 }
 
 export default User;

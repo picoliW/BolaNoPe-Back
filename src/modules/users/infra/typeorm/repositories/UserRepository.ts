@@ -24,6 +24,7 @@ class UsersRepository implements IUsersRepository {
     neighborhood,
     locality,
     uf,
+    file_url,
   }: ICreateUser): Promise<User> {
     const user = this.ormRepository.create({
       name,
@@ -38,6 +39,7 @@ class UsersRepository implements IUsersRepository {
       neighborhood,
       locality,
       uf,
+      file_url
     });
 
     await this.ormRepository.save(user);
