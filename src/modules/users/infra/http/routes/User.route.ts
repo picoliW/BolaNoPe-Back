@@ -7,6 +7,8 @@ import { validateObjectIdMIddleware } from "@shared/infra/http/middlewares/Valid
 import { UpdateUserSchema } from "../../schemas/UpdateUserSchema";
 import multer from "multer";
 import path from "path";
+import ensureAdmin from "@shared/infra/http/middlewares/AdminAuthMiddleware";
+import ensureAuthenticated from "@shared/infra/http/middlewares/UserAuthMiddleware";
 
 const usersRouter = Router();
 const usersController = container.resolve(UsersController);
@@ -25,10 +27,20 @@ const storage = multer.diskStorage({
 
 const upload = multer({ storage: storage });
 
-usersRouter.post("/", upload.single("file_url"), CreateUserSchema, CPFValidator, usersController.create);
+usersRouter.post(
+  "/",
+  upload.single("file_url"),
+  CreateUserSchema,
+  CPFValidator,
+  usersController.create,
+);
+
 usersRouter.get("/", usersController.index);
+
 usersRouter.delete("/:id", validateObjectIdMIddleware, usersController.delete);
+
 usersRouter.get("/:id", validateObjectIdMIddleware, usersController.show);
+
 usersRouter.put(
   "/:id",
   upload.single("file_url"),
@@ -36,6 +48,14 @@ usersRouter.put(
   validateObjectIdMIddleware,
   CPFValidator,
   usersController.update,
+);
+
+usersRouter.post(
+  "/professor",
+  ensureAuthenticated,
+  ensureAdmin,
+  upload.single("file_url"),
+  usersController.createProfessor,
 );
 
 export default usersRouter;

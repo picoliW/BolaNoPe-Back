@@ -90,7 +90,7 @@ export default class UsersController {
         email,
         password,
         cep,
-        file
+        file,
       });
 
       return res.status(200).json(updatedFields);
@@ -101,6 +101,37 @@ export default class UsersController {
         return res.status(409).json({ message: error.message });
       } else if (error instanceof BadRequestError) {
         return res.status(400).json({ message: error.message });
+      }
+      throw error;
+    }
+  }
+
+  public async createProfessor(
+    request: Request,
+    response: Response,
+  ): Promise<Response> {
+    const { name, cpf, birth, email, password, cep } = request.body;
+    const file = request.file;
+
+    const createUser = container.resolve(CreateUserService);
+    try {
+      const { user, token } = await createUser.execute({
+        name,
+        cpf,
+        birth,
+        email,
+        password,
+        cep,
+        role: "professor",
+        file,
+      });
+
+      return response.status(201).json({ user, token });
+    } catch (error) {
+      if (error instanceof ConflictError) {
+        return response.status(409).json({ message: error.message });
+      } else if (error instanceof BadRequestError) {
+        return response.status(400).json({ message: error.message });
       }
       throw error;
     }

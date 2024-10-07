@@ -23,8 +23,11 @@ class CreateUserService {
     password,
     cep,
     role = "user",
-    file
-  }: ICreateUser & { file?: Express.Multer.File }): Promise<{ user: User; token: string }> {
+    file,
+  }: ICreateUser & { file?: Express.Multer.File }): Promise<{
+    user: User;
+    token: string;
+  }> {
     let file_url = "";
 
     if (file) {
@@ -76,14 +79,14 @@ class CreateUserService {
 
     const token = sign(
       {
-        role: user.role, 
-        userId: user._id.toString()
+        role: user.role,
+        userId: user._id.toString(),
       },
       secret,
       {
         subject: user._id.toString(),
         expiresIn,
-      }
+      },
     );
     return {
       user,
