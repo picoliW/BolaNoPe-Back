@@ -139,4 +139,15 @@ export default class TeamsController {
 
     return res.json(teams);
   }
+
+  public async findUserTeams(req: Request, res: Response): Promise<Response> {
+    const userId = req.user.id;
+    const objectId = new ObjectId(userId);
+
+    const teamsRepository = container.resolve(TeamsRepository);
+
+    const teams = await teamsRepository.findByMemberId(objectId);
+
+    return res.json(teams);
+  }
 }
