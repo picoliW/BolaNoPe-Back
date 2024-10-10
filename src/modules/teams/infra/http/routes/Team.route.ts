@@ -10,12 +10,20 @@ import ensureLeaderOrAdmin from "@shared/infra/http/middlewares/LeaderOrAdminAut
 const teamsRouter = Router();
 const teamsController = container.resolve(TeamsController);
 
+teamsRouter.get(
+  "/user-teams",
+  ensureAuthenticated,
+  teamsController.findUserTeams,
+);
+
 teamsRouter.post(
   "/",
   ensureAuthenticated,
   CreateTeamSchema,
   teamsController.create,
 );
+
+teamsRouter.get("/leader", ensureAuthenticated, teamsController.findByLeader);
 
 teamsRouter.get("/", teamsController.index);
 

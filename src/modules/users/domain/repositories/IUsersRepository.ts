@@ -10,6 +10,7 @@ export interface IUsersRepository {
     email,
     password,
     cep,
+    file_url
   }: ICreateUser): Promise<User>;
   save(user: User): Promise<User>;
   find(): Promise<User[]>;

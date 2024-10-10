@@ -64,6 +64,15 @@ class TeamsRepository implements ITeamRepository {
     });
     return teams;
   }
+
+  public async findByLeaderId(leaderId: string): Promise<Team[]> {
+    const teams = await this.ormRepository.find({
+      where: {
+        leader_id: leaderId,
+      },
+    });
+    return teams;
+  }
 }
 
 export default TeamsRepository;

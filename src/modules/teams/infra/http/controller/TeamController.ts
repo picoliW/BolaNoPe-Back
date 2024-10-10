@@ -11,7 +11,7 @@ import ShowOneTeamService from "@modules/teams/services/ShowOneTeamService";
 import UpdateTeamService from "@modules/teams/services/UpdateTeamService";
 import { UnauthorizedError } from "@shared/errors/UnauthorizedError";
 import TeamsRepository from "../../typeorm/repositories/TeamRepositoy";
-import ListTeamsByMemberService from "@modules/teams/services/ListTeamByMemberService";
+import ListTeamsByLeaderService from "@modules/teams/services/ListTeamsByLeaderService";
 
 export default class TeamsController {
   public async index(req: Request, res: Response): Promise<Response> {
@@ -122,6 +122,27 @@ export default class TeamsController {
     const { memberId } = req.params;
 
     const objectId = new ObjectId(memberId);
+
+    const teamsRepository = container.resolve(TeamsRepository);
+
+    const teams = await teamsRepository.findByMemberId(objectId);
+
+    return res.json(teams);
+  }
+
+  public async findByLeader(req: Request, res: Response): Promise<Response> {
+    const userId = req.user.id;
+
+    const listTeamsByLeader = container.resolve(ListTeamsByLeaderService);
+
+    const teams = await listTeamsByLeader.execute(userId);
+
+    return res.json(teams);
+  }
+
+  public async findUserTeams(req: Request, res: Response): Promise<Response> {
+    const userId = req.user.id;
+    const objectId = new ObjectId(userId);
 
     const teamsRepository = container.resolve(TeamsRepository);
 
