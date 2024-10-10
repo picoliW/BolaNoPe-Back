@@ -26,4 +26,6 @@ tourneysRouter.delete(
   tourneysController.removeTeam,
 );
 
+tourneysRouter.get("/:id/teams", tourneysController.listTeams);
+
 export default tourneysRouter;
