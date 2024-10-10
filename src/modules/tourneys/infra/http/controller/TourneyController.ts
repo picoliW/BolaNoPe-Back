@@ -2,13 +2,15 @@ import { Request, Response } from "express";
 import { container } from "tsyringe";
 import { ObjectId } from "mongodb";
 import { ConflictError } from "@shared/errors/ConflictError";
-import { NotFoundError } from "@shared/errors/NotFoundError";
+
 import { BadRequestError } from "@shared/errors/BadRequestError";
 import ListTourneyService from "@modules/tourneys/services/ListTourneyService";
 import CreateTourneyService from "@modules/tourneys/services/CreateTourneyService";
 import DeleteTourneyService from "@modules/tourneys/services/DeleteTourneyService";
 import ShowOneTourneyService from "@modules/tourneys/services/ShowOneTourneyService";
 import UpdateTourneyService from "@modules/tourneys/services/UpdateTourneyService";
+import AddTeamToTourneyService from "@modules/tourneys/services/AddTeamToTourneyService";
+import { NotFoundError } from "@shared/errors/NotFoundError";
 
 export default class TourneysController {
   public async index(req: Request, res: Response): Promise<Response> {
@@ -117,6 +119,29 @@ export default class TourneysController {
         return res.status(400).json({ message: error.message });
       }
       throw error;
+    }
+  }
+
+  public async addTeam(req: Request, res: Response): Promise<Response> {
+    const { id: tourneyId } = req.params;
+    const { teamId } = req.body;
+
+    const addTeamToTourney = container.resolve(AddTeamToTourneyService);
+    const objectIdTourney = new ObjectId(tourneyId);
+    const objectIdTeam = new ObjectId(teamId);
+
+    try {
+      const tourney = await addTeamToTourney.execute(
+        objectIdTourney,
+        objectIdTeam,
+      );
+      return res.json(tourney);
+    } catch (error) {
+      if (error instanceof NotFoundError) {
+        return res.status(404).json({ message: error.message });
+      } else {
+        return res.status(500).json({ message: "Internal Server Error" });
+      }
     }
   }
 }
