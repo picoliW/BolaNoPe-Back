@@ -3,6 +3,7 @@ import { container } from "tsyringe";
 import TourneysController from "../controller/TourneyController";
 import { CreateTourneySchema } from "../../schemas/CreateTorneySchema";
 import { UpdateTourneySchema } from "../../schemas/UpdateTourneySchema";
+import { validateObjectIdMIddleware } from "@shared/infra/http/middlewares/ValidateObjectIdMiddleware";
 
 const tourneysRouter = Router();
 const tourneysController = container.resolve(TourneysController);
@@ -18,5 +19,11 @@ tourneysRouter.get("/:id", tourneysController.show);
 tourneysRouter.put("/:id", UpdateTourneySchema, tourneysController.update);
 
 tourneysRouter.post("/:id/addteam", tourneysController.addTeam);
+
+tourneysRouter.delete(
+  "/:id/removeteam",
+  validateObjectIdMIddleware,
+  tourneysController.removeTeam,
+);
 
 export default tourneysRouter;
