@@ -12,6 +12,7 @@ import UpdateTourneyService from "@modules/tourneys/services/UpdateTourneyServic
 import AddTeamToTourneyService from "@modules/tourneys/services/AddTeamToTourneyService";
 import { NotFoundError } from "@shared/errors/NotFoundError";
 import RemoveTeamFromTourneyService from "@modules/tourneys/services/RemoveTeamFromTourneyService";
+import ListTeamsInTourneyService from "@modules/tourneys/services/ListTeamsInTourneySerivice";
 
 export default class TourneysController {
   public async index(req: Request, res: Response): Promise<Response> {
@@ -169,6 +170,24 @@ export default class TourneysController {
       } else {
         return res.status(500).json({ message: "Internal server error" });
       }
+    }
+  }
+
+  public async listTeams(req: Request, res: Response): Promise<Response> {
+    const { id: tourneyId } = req.params;
+    const listTeamsInTourneyService = container.resolve(
+      ListTeamsInTourneyService,
+    );
+    const objectId = new ObjectId(tourneyId);
+
+    try {
+      const teams = await listTeamsInTourneyService.execute(objectId);
+      return res.json(teams);
+    } catch (error) {
+      if (error instanceof NotFoundError) {
+        return res.status(404).json({ message: error.message });
+      }
+      return res.status(500).json({ message: "Internal server error" });
     }
   }
 }
