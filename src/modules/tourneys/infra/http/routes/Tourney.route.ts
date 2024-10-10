@@ -17,4 +17,6 @@ tourneysRouter.get("/:id", tourneysController.show);
 
 tourneysRouter.put("/:id", UpdateTourneySchema, tourneysController.update);
 
+tourneysRouter.post("/:id/addteam", tourneysController.addTeam);
+
 export default tourneysRouter;
