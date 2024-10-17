@@ -1,4 +1,5 @@
 import fieldsRouter from "@modules/fields/infra/http/routes/Field.route";
+import notificationRouter from "@modules/notifications/infra/http/routes/notification.routes";
 import reserveRouter from "@modules/reserves/infra/http/routes/reserve.route";
 import teamsRouter from "@modules/teams/infra/http/routes/Team.route";
 import teamRequestsRouter from "@modules/teams/infra/http/routes/TeamRequest.route";
@@ -22,6 +23,8 @@ routes.use("/tourney", tourneysRouter);
 routes.use("/team", teamsRouter);
 
 routes.use("/request", teamRequestsRouter);
+
+routes.use("/notification", notificationRouter);
 
 routes.get("/", (request, response) => {
   return response.json("Hello world");
