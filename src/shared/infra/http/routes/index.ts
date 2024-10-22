@@ -1,3 +1,4 @@
+import commentRouter from "@modules/comments/infra/http/routes/comment.route";
 import fieldsRouter from "@modules/fields/infra/http/routes/Field.route";
 import notificationRouter from "@modules/notifications/infra/http/routes/notification.routes";
 import reserveRouter from "@modules/reserves/infra/http/routes/reserve.route";
@@ -25,6 +26,8 @@ routes.use("/team", teamsRouter);
 routes.use("/request", teamRequestsRouter);
 
 routes.use("/notification", notificationRouter);
+
+routes.use("/comment", commentRouter);
 
 routes.get("/", (request, response) => {
   return response.json("Hello world");
