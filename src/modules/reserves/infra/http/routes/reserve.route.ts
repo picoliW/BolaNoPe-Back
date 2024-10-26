@@ -10,6 +10,8 @@ const reserveController = container.resolve(ReserveController);
 
 reserveRouter.get("/most-reserved-times", reserveController.mostReservedTimes);
 
+reserveRouter.post("/", validateCreateReserve, reserveController.create);
+
 reserveRouter.get("/", reserveController.index);
 
 reserveRouter.get("/:id", validateObjectIdMIddleware, reserveController.show);
