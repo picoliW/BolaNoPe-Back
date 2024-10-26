@@ -1,5 +1,9 @@
+import { ICommentRepository } from "@modules/comments/domain/repositories/ICommentRepository";
+import CommentRepository from "@modules/comments/infra/typeorm/repositories/CommentRepository";
 import { IFieldsRepository } from "@modules/fields/domain/repositories/IFieldRepository";
 import FieldsRepository from "@modules/fields/infra/typeorm/repositories/FieldRepository";
+import { INotificationRepository } from "@modules/notifications/domain/repositories/INotificationRepository";
+import NotificationRepository from "@modules/notifications/infra/typeorm/repositories/NotificationRepository";
 import { IReserveRepository } from "@modules/reserves/domain/repositories/IReserveRepository";
 import ReserveRepository from "@modules/reserves/infra/typeorm/repositories/ReserveRepository";
 import { ITeamRepository } from "@modules/teams/domain/repositories/ITeamRepository";
@@ -40,4 +44,14 @@ container.registerSingleton<ITeamRepository>(
 container.registerSingleton<ITeamRequestRepository>(
   "TeamRequestRepository",
   TeamRequestRepository,
+);
+
+container.registerSingleton<INotificationRepository>(
+  "NotificationsRepository",
+  NotificationRepository,
+);
+
+container.registerSingleton<ICommentRepository>(
+  "CommentsRepository",
+  CommentRepository,
 );

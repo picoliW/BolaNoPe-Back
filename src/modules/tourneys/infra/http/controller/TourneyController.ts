@@ -11,6 +11,8 @@ import ShowOneTourneyService from "@modules/tourneys/services/ShowOneTourneyServ
 import UpdateTourneyService from "@modules/tourneys/services/UpdateTourneyService";
 import AddTeamToTourneyService from "@modules/tourneys/services/AddTeamToTourneyService";
 import { NotFoundError } from "@shared/errors/NotFoundError";
+import RemoveTeamFromTourneyService from "@modules/tourneys/services/RemoveTeamFromTourneyService";
+import ListTeamsInTourneyService from "@modules/tourneys/services/ListTeamsInTourneySerivice";
 
 export default class TourneysController {
   public async index(req: Request, res: Response): Promise<Response> {
@@ -140,8 +142,52 @@ export default class TourneysController {
       if (error instanceof NotFoundError) {
         return res.status(404).json({ message: error.message });
       } else {
-        return res.status(500).json({ message: "Internal Server Error" });
+        return res.status(500).json({ message: "Internal server error" });
       }
+    }
+  }
+
+  public async removeTeam(req: Request, res: Response): Promise<Response> {
+    const { id: tourneyId } = req.params;
+    const { teamId } = req.body;
+
+    if (!ObjectId.isValid(tourneyId) || !ObjectId.isValid(teamId)) {
+      return res.status(400).json({ message: "Invalid ObjectId" });
+    }
+
+    const removeTeamFromTourney = container.resolve(
+      RemoveTeamFromTourneyService,
+    );
+    const objectIdTourney = new ObjectId(tourneyId);
+    const objectIdTeam = new ObjectId(teamId);
+
+    try {
+      await removeTeamFromTourney.execute(objectIdTourney, objectIdTeam);
+      return res.status(204).json();
+    } catch (error) {
+      if (error instanceof NotFoundError) {
+        return res.status(404).json({ message: error.message });
+      } else {
+        return res.status(500).json({ message: "Internal server error" });
+      }
+    }
+  }
+
+  public async listTeams(req: Request, res: Response): Promise<Response> {
+    const { id: tourneyId } = req.params;
+    const listTeamsInTourneyService = container.resolve(
+      ListTeamsInTourneyService,
+    );
+    const objectId = new ObjectId(tourneyId);
+
+    try {
+      const teams = await listTeamsInTourneyService.execute(objectId);
+      return res.json(teams);
+    } catch (error) {
+      if (error instanceof NotFoundError) {
+        return res.status(404).json({ message: error.message });
+      }
+      return res.status(500).json({ message: "Internal server error" });
     }
   }
 }
