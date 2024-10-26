@@ -8,7 +8,7 @@ import { validateUpdateReserve } from "../../schemas/UpdateReserveValidator";
 const reserveRouter = Router();
 const reserveController = container.resolve(ReserveController);
 
-reserveRouter.post("/", validateCreateReserve, reserveController.create);
+reserveRouter.get("/most-reserved-times", reserveController.mostReservedTimes);
 
 reserveRouter.get("/", reserveController.index);
 
