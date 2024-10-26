@@ -1,3 +1,4 @@
+import Comment from "@modules/comments/infra/typeorm/entities/Comment";
 import Field from "@modules/fields/infra/typeorm/entities/Field";
 import Notification from "@modules/notifications/infra/typeorm/entities/Notification";
 import Reserve from "@modules/reserves/infra/typeorm/entities/Reserve";
@@ -15,7 +16,16 @@ export const dataSource = new DataSource({
   host: process.env.DB_HOST,
   synchronize: true,
   logging: ["query", "error"],
-  entities: [User, Field, Reserve, Tourney, Team, TeamRequest, Notification],
+  entities: [
+    User,
+    Field,
+    Reserve,
+    Tourney,
+    Team,
+    TeamRequest,
+    Notification,
+    Comment,
+  ],
   migrations: [],
   subscribers: [],
 });
