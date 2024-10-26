@@ -39,7 +39,7 @@ class UsersRepository implements IUsersRepository {
       neighborhood,
       locality,
       uf,
-      file_url
+      file_url,
     });
 
     await this.ormRepository.save(user);
@@ -84,6 +84,11 @@ class UsersRepository implements IUsersRepository {
       where: { email },
     });
     return user;
+  }
+
+  public async findByRole(role: string): Promise<User[]> {
+    const users = await this.ormRepository.find({ where: { role } });
+    return users;
   }
 }
 

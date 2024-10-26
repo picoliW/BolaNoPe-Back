@@ -12,13 +12,13 @@ import { BadRequestError } from "@shared/errors/BadRequestError";
 
 export default class UsersController {
   public async index(req: Request, res: Response): Promise<Response> {
+    const { role } = req.query;
     const listUser = container.resolve(ListUserService);
 
-    const users = await listUser.execute();
+    const users = await listUser.execute({ role: role as string });
 
     return res.json(users);
   }
-
   public async create(request: Request, response: Response): Promise<Response> {
     const { name, cpf, birth, email, password, cep, role } = request.body;
     const file = request.file;
