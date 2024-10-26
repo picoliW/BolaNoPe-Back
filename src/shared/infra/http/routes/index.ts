@@ -2,6 +2,7 @@ import commentRouter from "@modules/comments/infra/http/routes/comment.route";
 import fieldsRouter from "@modules/fields/infra/http/routes/Field.route";
 import notificationRouter from "@modules/notifications/infra/http/routes/notification.routes";
 import reserveRouter from "@modules/reserves/infra/http/routes/reserve.route";
+import studentsRouter from "@modules/students/infra/http/routes/student.route";
 import teamsRouter from "@modules/teams/infra/http/routes/Team.route";
 import teamRequestsRouter from "@modules/teams/infra/http/routes/TeamRequest.route";
 import tourneysRouter from "@modules/tourneys/infra/http/routes/Tourney.route";
@@ -28,6 +29,8 @@ routes.use("/request", teamRequestsRouter);
 routes.use("/notification", notificationRouter);
 
 routes.use("/comment", commentRouter);
+
+routes.use("/student", studentsRouter);
 
 routes.get("/", (request, response) => {
   return response.json("Hello world");

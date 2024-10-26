@@ -6,6 +6,8 @@ import { INotificationRepository } from "@modules/notifications/domain/repositor
 import NotificationRepository from "@modules/notifications/infra/typeorm/repositories/NotificationRepository";
 import { IReserveRepository } from "@modules/reserves/domain/repositories/IReserveRepository";
 import ReserveRepository from "@modules/reserves/infra/typeorm/repositories/ReserveRepository";
+import { IStudentRepository } from "@modules/students/domain/repositories/IStudentRepository";
+import StudentsRepository from "@modules/students/infra/typeorm/repositories/StudentsRepository";
 import { ITeamRepository } from "@modules/teams/domain/repositories/ITeamRepository";
 import { ITeamRequestRepository } from "@modules/teams/domain/repositories/ITeamRequestRepository";
 import TeamsRepository from "@modules/teams/infra/typeorm/repositories/TeamRepositoy";
@@ -54,4 +56,9 @@ container.registerSingleton<INotificationRepository>(
 container.registerSingleton<ICommentRepository>(
   "CommentsRepository",
   CommentRepository,
+);
+
+container.registerSingleton<IStudentRepository>(
+  "StudentsRepository",
+  StudentsRepository,
 );
