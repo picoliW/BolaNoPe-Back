@@ -20,4 +20,5 @@ export interface IUsersRepository {
   findByRole(role: string): Promise<User[]>;
   findByCPF(cpf: string): Promise<User | null>;
   findByEmail(email: string): Promise<User | null>;
+  countStudentsByProfessorId(id_professor: ObjectId): Promise<number>;
 }

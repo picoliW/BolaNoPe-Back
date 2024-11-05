@@ -45,6 +45,9 @@ class User {
 
   @Column()
   file_url: string;
+
+  @Column("array", { nullable: true })
+  students?: ObjectId[];
 }
 
 export default User;

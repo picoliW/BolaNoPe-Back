@@ -63,6 +63,11 @@ class CreateStudentService {
       uf: addressFields.uf,
     });
 
+    professor.students = professor.students || [];
+    professor.students.push(student._id);
+
+    await this.usersRepository.save(professor);
+
     return student;
   }
 }

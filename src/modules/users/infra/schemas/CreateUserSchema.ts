@@ -9,5 +9,6 @@ export const CreateUserSchema = celebrate({
     password: Joi.string().required().min(6),
     cep: Joi.string().required(),
     role: Joi.string(),
+    students: Joi.array(),
   },
 });

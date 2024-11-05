@@ -90,6 +90,20 @@ class UsersRepository implements IUsersRepository {
     const users = await this.ormRepository.find({ where: { role } });
     return users;
   }
+
+  public async countStudentsByProfessorId(
+    id_professor: ObjectId,
+  ): Promise<number> {
+    const professor = await this.ormRepository.findOne({
+      where: { _id: id_professor, role: "professor" },
+    });
+
+    if (!professor || !professor.students) {
+      return 0;
+    }
+
+    return professor.students.length;
+  }
 }
 
 export default UsersRepository;

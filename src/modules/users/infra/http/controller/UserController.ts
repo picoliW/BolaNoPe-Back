@@ -9,6 +9,7 @@ import UpdateUserService from "@modules/users/services/UpdateUserService";
 import { ConflictError } from "@shared/errors/ConflictError";
 import { NotFoundError } from "@shared/errors/NotFoundError";
 import { BadRequestError } from "@shared/errors/BadRequestError";
+import CountProfessorStudentsService from "@modules/users/services/CountProfessorStudentsService";
 
 export default class UsersController {
   public async index(req: Request, res: Response): Promise<Response> {
@@ -132,6 +133,27 @@ export default class UsersController {
         return response.status(409).json({ message: error.message });
       } else if (error instanceof BadRequestError) {
         return response.status(400).json({ message: error.message });
+      }
+      throw error;
+    }
+  }
+
+  public async countStudents(req: Request, res: Response): Promise<Response> {
+    const { id_professor } = req.params;
+
+    const countProfessorStudentsService = container.resolve(
+      CountProfessorStudentsService,
+    );
+
+    try {
+      const professorId = new ObjectId(id_professor);
+      const studentCount =
+        await countProfessorStudentsService.execute(professorId);
+
+      return res.status(200).json({ studentCount });
+    } catch (error) {
+      if (error instanceof NotFoundError) {
+        return res.status(404).json({ message: error.message });
       }
       throw error;
     }
