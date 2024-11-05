@@ -2,7 +2,8 @@ import { Request, Response } from "express";
 import { container } from "tsyringe";
 import { ObjectId } from "mongodb";
 import { ConflictError } from "@shared/errors/ConflictError";
-import CreateStudentService from "@modules/students/services/ICreateStudent";
+import CreateStudentService from "@modules/students/services/CreateStudentService";
+import { NotFoundError } from "@shared/errors/NotFoundError";
 
 export default class StudentsController {
   public async create(req: Request, res: Response): Promise<Response> {
@@ -24,6 +25,8 @@ export default class StudentsController {
     } catch (error) {
       if (error instanceof ConflictError) {
         return res.status(409).json({ message: error.message });
+      } else if (error instanceof NotFoundError) {
+        return res.status(404).json({ message: error.message });
       }
       throw error;
     }
