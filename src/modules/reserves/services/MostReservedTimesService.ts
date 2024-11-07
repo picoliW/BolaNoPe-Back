@@ -3,7 +3,7 @@ import { IReserveRepository } from "../domain/repositories/IReserveRepository";
 
 interface IFieldMostReservedTime {
   id_field: string;
-  most_reserved_time: string;
+  most_reserved_times: { time: string; count: number }[];
 }
 
 @injectable()
@@ -30,17 +30,18 @@ class MostReservedTimesService {
       fieldReservationsCount[id_field][start_hour] += 1;
     });
 
+    // Mapear os 5 horários mais reservados para cada campo
     const mostReservedTimes: IFieldMostReservedTime[] = Object.entries(
       fieldReservationsCount,
     ).map(([id_field, times]) => {
-      const mostReservedTime = Object.entries(times).reduce(
-        (max, [time, count]) => (count > max.count ? { time, count } : max),
-        { time: "", count: 0 },
-      );
+      const sortedTimes = Object.entries(times)
+        .map(([time, count]) => ({ time, count }))
+        .sort((a, b) => b.count - a.count)
+        .slice(0, 5);
 
       return {
         id_field,
-        most_reserved_time: mostReservedTime.time,
+        most_reserved_times: sortedTimes,
       };
     });
 
