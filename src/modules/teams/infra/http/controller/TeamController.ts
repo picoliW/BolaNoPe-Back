@@ -23,8 +23,8 @@ export default class TeamsController {
   }
 
   public async create(request: Request, response: Response): Promise<Response> {
-    const { name, leader_id, description, members_id, tourneys_id } =
-      request.body;
+    const { name, leader_id, description, members_id, tourneys_id } = request.body;
+    const file = request.file;
 
     const loggedInUserId = request.user.id;
 
@@ -38,6 +38,7 @@ export default class TeamsController {
           leader_id,
           members_id,
           tourneys_id,
+          file,
         },
         loggedInUserId,
       );
@@ -102,7 +103,7 @@ export default class TeamsController {
         description,
         leader_id,
         members_id,
-        tourneys_id,
+        tourneys_id
       });
 
       return res.status(200).json(updatedTeams);

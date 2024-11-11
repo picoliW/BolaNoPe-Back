@@ -9,6 +9,7 @@ export interface ITeamRepository {
     leader_id,
     members_id,
     tourneys_id,
+    file_url,
   }: ICreateTeam): Promise<Team>;
   save(team: Team): Promise<Team>;
   find(): Promise<Team[]>;
