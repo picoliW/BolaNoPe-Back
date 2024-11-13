@@ -7,15 +7,17 @@ import ListCommentsByTeamService from "@modules/comments/services/ListCommentByT
 import UpdateCommentService from "@modules/comments/services/UpdateCommentService";
 import { NotFoundError } from "@shared/errors/NotFoundError";
 import { UnauthorizedError } from "@shared/errors/UnauthorizedError";
+import ListCommentsByFieldService from "@modules/comments/services/ListCommentsByFiels";
 
 export default class CommentController {
   public async create(req: Request, res: Response): Promise<Response> {
-    const { team_id, comment } = req.body;
+    const { team_id, field_id, comment } = req.body;
     const user_id = req.user.id;
 
     const createComment = container.resolve(CreateCommentService);
     const createdComment = await createComment.execute({
-      team_id: new ObjectId(team_id),
+      team_id: team_id ? new ObjectId(team_id) : undefined,
+      field_id: field_id ? new ObjectId(field_id) : undefined,
       user_id: new ObjectId(user_id),
       comment,
     });
@@ -28,6 +30,15 @@ export default class CommentController {
 
     const listComments = container.resolve(ListCommentsByTeamService);
     const comments = await listComments.execute(new ObjectId(team_id));
+
+    return res.json(comments);
+  }
+
+  public async listByField(req: Request, res: Response): Promise<Response> {
+    const { field_id } = req.params;
+
+    const listComments = container.resolve(ListCommentsByFieldService);
+    const comments = await listComments.execute(new ObjectId(field_id));
 
     return res.json(comments);
   }

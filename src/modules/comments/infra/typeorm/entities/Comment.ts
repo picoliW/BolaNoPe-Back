@@ -6,8 +6,11 @@ class Comment {
   @ObjectIdColumn()
   _id: ObjectId;
 
-  @Column()
-  team_id: ObjectId;
+  @Column({ nullable: true })
+  team_id?: ObjectId;
+
+  @Column({ nullable: true })
+  field_id?: ObjectId;
 
   @Column()
   user_id: ObjectId;

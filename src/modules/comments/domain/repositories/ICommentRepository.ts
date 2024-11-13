@@ -8,4 +8,5 @@ export interface ICommentRepository {
   findById(id: ObjectId): Promise<Comment | null>;
   findByTeamId(team_id: ObjectId): Promise<Comment[]>;
   remove(comment: Comment): Promise<void>;
+  findByFieldId(field_id: ObjectId): Promise<Comment[]>;
 }

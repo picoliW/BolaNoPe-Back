@@ -9,6 +9,12 @@ const commentController = new CommentController();
 commentRouter.post("/", ensureAuthenticated, commentController.create);
 
 commentRouter.get(
+  "/field/:field_id",
+  ensureAuthenticated,
+  commentController.listByField,
+);
+
+commentRouter.get(
   "/team/:team_id",
   ensureAuthenticated,
   commentController.listByTeam,
