@@ -17,6 +17,7 @@ class TeamsRepository implements ITeamRepository {
     leader_id,
     members_id,
     tourneys_id,
+    file_url,
   }: ICreateTeam): Promise<Team> {
     const team = this.ormRepository.create({
       name,
@@ -24,6 +25,7 @@ class TeamsRepository implements ITeamRepository {
       leader_id,
       members_id,
       tourneys_id,
+      file_url,
     });
 
     await this.ormRepository.save(team);

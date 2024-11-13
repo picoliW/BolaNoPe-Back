@@ -4,4 +4,5 @@ export interface ICreateTeam {
   leader_id: string;
   members_id?: string[];
   tourneys_id?: string[];
+  file_url?: string;
 }

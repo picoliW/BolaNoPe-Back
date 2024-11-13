@@ -20,6 +20,9 @@ class Team {
 
   @Column()
   tourneys_id: string[];
+
+  @Column()
+  file_url: string;
 }
 
 export default Team;
