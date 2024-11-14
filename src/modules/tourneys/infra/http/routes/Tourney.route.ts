@@ -8,6 +8,11 @@ import { validateObjectIdMIddleware } from "@shared/infra/http/middlewares/Valid
 const tourneysRouter = Router();
 const tourneysController = container.resolve(TourneysController);
 
+tourneysRouter.get(
+  "/average-participants",
+  tourneysController.getAverageParticipants,
+);
+
 tourneysRouter.post("/", CreateTourneySchema, tourneysController.create);
 
 tourneysRouter.get("/", tourneysController.index);

@@ -14,11 +14,13 @@ class CommentRepository implements ICommentRepository {
 
   public async create({
     team_id,
+    field_id,
     user_id,
     comment,
   }: ICreateComment): Promise<Comment> {
     const newComment = this.ormRepository.create({
       team_id,
+      field_id,
       user_id,
       comment,
       created_at: new Date(),
@@ -36,6 +38,10 @@ class CommentRepository implements ICommentRepository {
 
   public async findById(id: ObjectId): Promise<Comment | null> {
     return this.ormRepository.findOne({ where: { _id: id } });
+  }
+
+  public async findByFieldId(field_id: ObjectId): Promise<Comment[]> {
+    return this.ormRepository.find({ where: { field_id } });
   }
 
   public async findByTeamId(team_id: ObjectId): Promise<Comment[]> {

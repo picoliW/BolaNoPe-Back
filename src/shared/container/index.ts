@@ -4,8 +4,12 @@ import { IFieldsRepository } from "@modules/fields/domain/repositories/IFieldRep
 import FieldsRepository from "@modules/fields/infra/typeorm/repositories/FieldRepository";
 import { INotificationRepository } from "@modules/notifications/domain/repositories/INotificationRepository";
 import NotificationRepository from "@modules/notifications/infra/typeorm/repositories/NotificationRepository";
+import { IRatingRepository } from "@modules/rating/domain/repositories/IRatingRepositorie";
+import RatingRepository from "@modules/rating/infra/typeorm/repositories/RatingRepository";
 import { IReserveRepository } from "@modules/reserves/domain/repositories/IReserveRepository";
 import ReserveRepository from "@modules/reserves/infra/typeorm/repositories/ReserveRepository";
+import { IStudentRepository } from "@modules/students/domain/repositories/IStudentRepository";
+import StudentsRepository from "@modules/students/infra/typeorm/repositories/StudentsRepository";
 import { ITeamRepository } from "@modules/teams/domain/repositories/ITeamRepository";
 import { ITeamRequestRepository } from "@modules/teams/domain/repositories/ITeamRequestRepository";
 import TeamsRepository from "@modules/teams/infra/typeorm/repositories/TeamRepositoy";
@@ -54,4 +58,14 @@ container.registerSingleton<INotificationRepository>(
 container.registerSingleton<ICommentRepository>(
   "CommentsRepository",
   CommentRepository,
+);
+
+container.registerSingleton<IStudentRepository>(
+  "StudentsRepository",
+  StudentsRepository,
+);
+
+container.registerSingleton<IRatingRepository>(
+  "RatingsRepository",
+  RatingRepository,
 );

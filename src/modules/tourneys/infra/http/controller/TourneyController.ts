@@ -13,6 +13,7 @@ import AddTeamToTourneyService from "@modules/tourneys/services/AddTeamToTourney
 import { NotFoundError } from "@shared/errors/NotFoundError";
 import RemoveTeamFromTourneyService from "@modules/tourneys/services/RemoveTeamFromTourneyService";
 import ListTeamsInTourneyService from "@modules/tourneys/services/ListTeamsInTourneySerivice";
+import GetAverageParticipantsService from "@modules/tourneys/services/GetAverageParticipantsService";
 
 export default class TourneysController {
   public async index(req: Request, res: Response): Promise<Response> {
@@ -189,5 +190,16 @@ export default class TourneysController {
       }
       return res.status(500).json({ message: "Internal server error" });
     }
+  }
+
+  public async getAverageParticipants(
+    req: Request,
+    res: Response,
+  ): Promise<Response> {
+    const getAverageParticipants = container.resolve(
+      GetAverageParticipantsService,
+    );
+    const averageParticipants = await getAverageParticipants.execute();
+    return res.json({ averageParticipants });
   }
 }

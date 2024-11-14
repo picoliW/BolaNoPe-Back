@@ -35,6 +35,8 @@ usersRouter.post(
   usersController.create,
 );
 
+usersRouter.get("/:id_professor/students/count", usersController.countStudents);
+
 usersRouter.get("/", usersController.index);
 
 usersRouter.delete("/:id", validateObjectIdMIddleware, usersController.delete);

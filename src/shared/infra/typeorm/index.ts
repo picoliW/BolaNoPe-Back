@@ -1,7 +1,9 @@
 import Comment from "@modules/comments/infra/typeorm/entities/Comment";
 import Field from "@modules/fields/infra/typeorm/entities/Field";
 import Notification from "@modules/notifications/infra/typeorm/entities/Notification";
+import Rating from "@modules/rating/infra/typeorm/entities/Rating";
 import Reserve from "@modules/reserves/infra/typeorm/entities/Reserve";
+import Student from "@modules/students/infra/typeorm/entities/Student";
 import Team from "@modules/teams/infra/typeorm/entities/Team";
 import TeamRequest from "@modules/teams/infra/typeorm/entities/TeamRequest";
 import Tourney from "@modules/tourneys/infra/typeorm/entities/Tourney";
@@ -25,6 +27,8 @@ export const dataSource = new DataSource({
     TeamRequest,
     Notification,
     Comment,
+    Student,
+    Rating,
   ],
   migrations: [],
   subscribers: [],

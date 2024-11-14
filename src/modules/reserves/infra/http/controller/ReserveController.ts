@@ -10,6 +10,7 @@ import ShowOneReserveService from "@modules/reserves/services/ShowOneReserveServ
 import UpdateReserveService from "@modules/reserves/services/UpdateReserveService";
 import DeleteReserveService from "@modules/reserves/services/DeleteReserveService";
 import ListReserveByFieldService from "@modules/reserves/services/ListReserveByFieldService";
+import MostReservedTimesService from "@modules/reserves/services/MostReservedTimesService";
 
 export default class ReserveController {
   public async index(req: Request, res: Response): Promise<Response> {
@@ -117,5 +118,18 @@ export default class ReserveController {
     const reserves = await listReserveByField.execute(id_field);
 
     return res.json(reserves);
+  }
+
+  public async mostReservedTimes(
+    req: Request,
+    res: Response,
+  ): Promise<Response> {
+    const mostReservedTimesService = container.resolve(
+      MostReservedTimesService,
+    );
+
+    const mostReservedTimes = await mostReservedTimesService.execute();
+
+    return res.json(mostReservedTimes);
   }
 }
