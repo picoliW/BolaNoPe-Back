@@ -11,6 +11,6 @@ O projeto consiste em uma aplicação para criação de times personalizados, ma
 | Permitir que admin tenha controle  | ✅     |
 | Promover a saúde e o bem-estar     | ✅     |
 | Criação e organização de times     | ✅     |
-| Marcação de aulas                  | ⌛     |
+| Cadastro de Alunos                 | ✅     |
 | Organização de torneios de futebol | ✅     |
-| Fórum                              | ⌛     |
+| Comentários em times e quadras     | ✅     |
