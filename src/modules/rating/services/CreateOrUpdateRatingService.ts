@@ -14,6 +14,7 @@ class CreateOrUpdateRatingService {
     field_id: ObjectId,
     user_id: ObjectId,
     ratingValue: number,
+    comment_id?: ObjectId,
   ): Promise<Rating> {
     let rating = await this.ratingRepository.findByFieldAndUser(
       field_id,
@@ -21,12 +22,15 @@ class CreateOrUpdateRatingService {
     );
 
     if (rating) {
+      rating.rating = ratingValue;
+      rating.comment_id = comment_id ?? rating.comment_id;
       rating = await this.ratingRepository.update(rating, ratingValue);
     } else {
       rating = await this.ratingRepository.create(
         field_id,
         user_id,
         ratingValue,
+        comment_id,
       );
     }
 

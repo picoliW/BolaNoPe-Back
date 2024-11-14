@@ -13,4 +13,5 @@ export interface IRatingRepository {
     user_id: ObjectId,
   ): Promise<Rating | null>;
   calculateAverageRating(field_id: ObjectId): Promise<number>;
+  findById(rating_id: ObjectId): Promise<Rating | null>;
 }

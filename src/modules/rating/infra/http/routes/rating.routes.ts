@@ -1,7 +1,6 @@
 import { Router } from "express";
 import ensureAuthenticated from "@shared/infra/http/middlewares/UserAuthMiddleware";
 import RatingController from "../controller/RatingController";
-import { CreateTourneySchema } from "@modules/tourneys/infra/schemas/CreateTorneySchema";
 import { CreateRatingSchema } from "../../schemas/CreateRatingSchema";
 
 const ratingRouter = Router();
@@ -19,6 +18,12 @@ ratingRouter.get(
   ensureAuthenticated,
   CreateRatingSchema,
   ratingController.getAverageRating,
+);
+
+ratingRouter.get(
+  "/:rating_id/comment",
+  ensureAuthenticated,
+  ratingController.getRatingWithComment,
 );
 
 export default ratingRouter;

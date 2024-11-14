@@ -15,6 +15,9 @@ class Rating {
   @Column()
   rating: number;
 
+  @Column({ nullable: true })
+  comment_id?: ObjectId;
+
   @Column()
   created_at: Date;
 

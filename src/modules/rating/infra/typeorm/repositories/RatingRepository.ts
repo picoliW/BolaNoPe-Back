@@ -1,4 +1,3 @@
-// src/modules/ratings/repositories/RatingRepository.ts
 import { Repository } from "typeorm";
 import { ObjectId } from "mongodb";
 import Rating from "../entities/Rating";
@@ -15,11 +14,13 @@ class RatingRepository {
     field_id: ObjectId,
     user_id: ObjectId,
     rating: number,
+    comment_id?: ObjectId,
   ): Promise<Rating> {
     const newRating = this.ormRepository.create({
       field_id,
       user_id,
       rating,
+      comment_id,
       created_at: new Date(),
       updated_at: new Date(),
     });
@@ -46,6 +47,10 @@ class RatingRepository {
     const totalRatings = ratings.length;
     const sumRatings = ratings.reduce((acc, rating) => acc + rating.rating, 0);
     return totalRatings ? sumRatings / totalRatings : 0;
+  }
+
+  public async findById(rating_id: ObjectId): Promise<Rating | null> {
+    return this.ormRepository.findOne({ where: { _id: rating_id } });
   }
 }
 
