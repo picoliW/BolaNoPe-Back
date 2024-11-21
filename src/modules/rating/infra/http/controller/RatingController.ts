@@ -4,6 +4,7 @@ import { ObjectId } from "mongodb";
 import CreateOrUpdateRatingService from "@modules/rating/services/CreateOrUpdateRatingService";
 import GetAverageRatingService from "@modules/rating/services/GetAverageRatingService";
 import GetRatingWithCommentService from "@modules/rating/services/GetRatingWithCommentService";
+import GetAllRatingsWithCommentsService from "@modules/rating/services/GetAllRatingsWithCommentsServices";
 
 class RatingController {
   public async rateField(req: Request, res: Response): Promise<Response> {
@@ -47,6 +48,19 @@ class RatingController {
     );
 
     return res.json(ratingWithComment);
+  }
+
+  public async getAllRatingsWithComments(
+    req: Request,
+    res: Response,
+  ): Promise<Response> {
+    const getAllRatingsWithComments = container.resolve(
+      GetAllRatingsWithCommentsService,
+    );
+
+    const ratingsWithComments = await getAllRatingsWithComments.execute();
+
+    return res.json(ratingsWithComments);
   }
 }
 

@@ -26,4 +26,6 @@ ratingRouter.get(
   ratingController.getRatingWithComment,
 );
 
+ratingRouter.get("/", ratingController.getAllRatingsWithComments);
+
 export default ratingRouter;

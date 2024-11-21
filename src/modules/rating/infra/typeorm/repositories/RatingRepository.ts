@@ -52,6 +52,10 @@ class RatingRepository {
   public async findById(rating_id: ObjectId): Promise<Rating | null> {
     return this.ormRepository.findOne({ where: { _id: rating_id } });
   }
+
+  public async findAll(): Promise<Rating[]> {
+    return this.ormRepository.find();
+  }
 }
 
 export default RatingRepository;
